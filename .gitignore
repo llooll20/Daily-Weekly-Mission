@@ -1,0 +1,19 @@
+# Build output
+bin/
+obj/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# .NET
+TestResults/
+*.nupkg
+*.snupkg
+
+# OS files
+Thumbs.db
+Desktop.ini
