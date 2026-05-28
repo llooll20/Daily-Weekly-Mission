@@ -1,5 +1,4 @@
 using System.Windows;
-using Wpf_study.DesignPattern.MVVM.Models;
 
 namespace Wpf_study
 {
@@ -10,11 +9,7 @@ namespace Wpf_study
     {
         private void MVVMBtnClick(object sender, RoutedEventArgs e)
         {
-            var personRepository = new PersonRepository();
-            var mainView = new DesignPattern.MVVM.Views.MainView()
-            {
-                DataContext = new DesignPattern.MVVM.ViewModels.MainViewModel(personRepository)
-            };
+            var mainView = new DesignPattern.MVVM.Views.MainView();
 
             mainView.Show();
         }

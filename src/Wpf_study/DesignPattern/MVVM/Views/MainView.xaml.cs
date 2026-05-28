@@ -9,6 +9,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Wpf_study.DesignPattern.MVVM.Models;
+using Wpf_study.DesignPattern.MVVM.Services.Time;
+using Wpf_study.DesignPattern.MVVM.ViewModels;
 
 namespace Wpf_study.DesignPattern.MVVM.Views
 {
@@ -20,6 +23,16 @@ namespace Wpf_study.DesignPattern.MVVM.Views
         public MainView()
         {
             InitializeComponent();
+            DataContext = CreateViewModel();
+        }
+
+        private static MainViewModel CreateViewModel()
+        {
+            var personRepository = new PersonRepository();
+            var clock = new SystemClock();
+            var missionPeriodService = new MissionPeriodService(clock);
+
+            return new MainViewModel(personRepository, missionPeriodService);
         }
     }
 }
