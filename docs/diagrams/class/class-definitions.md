@@ -14,8 +14,8 @@ Windows
     속성: MainViewModel DataContext  
     Close()  
     		- 설명: 현재 메인 창을 닫는다.  
-    		- 입력: 없음  
-    		- 출력: 없음  
+    		- 입력:   
+    		- 출력:   
     
 - AddMissionWindow
     
@@ -23,8 +23,8 @@ Windows
     속성: AddMissionViewModel DataContext  
     Close()  
     		- 설명: 현재 미션 추가 창을 닫는다.  
-    		- 입력: 없음  
-    		- 출력: 없음  
+    		- 입력:   
+    		- 출력:   
     
 - MissionHistoryWindow
     
@@ -32,8 +32,8 @@ Windows
     속성: MissionHistoryViewModel DataContext  
     Close()  
     		- 설명: 현재 미션 기록 창을 닫는다.  
-    		- 입력: 없음  
-    		- 출력: 없음  
+    		- 입력:   
+    		- 출력:   
     
 
 ViewModels
@@ -44,23 +44,23 @@ ViewModels
     속성: DailyMissions, WeeklyMissions, IsDeleteMode, DeleteMissionCommand, CompleteMissionCommand, OpenAddMissionCommand, OpenMissionHistoryCommand  
     LoadMissions()  
     		- 설명: 저장소에서 미션 목록을 불러와 일일 미션과 주간 미션으로 나눈다.  
-    		- 입력: 없음  
-    		- 출력: 없음  
+    		- 입력:   
+    		- 출력:   
 
     EnterDeleteMode()  
     		- 설명: 메인 화면을 미션 삭제 모드로 전환한다.  
-    		- 입력: 없음  
-    		- 출력: 없음  
+    		- 입력:   
+    		- 출력:   
 
     CompleteMission(Mission mission)  
     		- 설명: 선택된 미션의 완료 기록을 추가하고 진행 상태를 갱신한다.  
     		- 입력: 완료 처리할 Mission  
-    		- 출력: 없음  
+    		- 출력:   
 
     DeleteMission(Mission mission)  
     		- 설명: 선택된 미션을 저장소에서 삭제하고 화면 목록을 갱신한다.  
     		- 입력: 삭제할 Mission  
-    		- 출력: 없음  
+    		- 출력:   
     
 - AddMissionViewModel
     
@@ -68,18 +68,18 @@ ViewModels
     속성: Title, Content, SelectedMissionType, TargetCount, StartDate, EndDate, SelectedDays, SaveMissionCommand  
     CreateMission()  
     		- 설명: 입력된 값을 바탕으로 저장 가능한 Mission 객체를 만든다.  
-    		- 입력: 없음  
+    		- 입력:   
     		- 출력: Mission  
 
     CanSave()  
     		- 설명: 현재 입력값으로 미션을 저장할 수 있는지 검사한다.  
-    		- 입력: 없음  
+    		- 입력:   
     		- 출력: bool  
 
     SaveMission()  
     		- 설명: 생성한 미션을 저장소에 저장한다.  
-    		- 입력: 없음  
-    		- 출력: 없음  
+    		- 입력:   
+    		- 출력:   
     
 - MissionHistoryViewModel
     
@@ -87,12 +87,12 @@ ViewModels
     속성: Missions, MissionProgresses, SelectedMission  
     LoadHistory()  
     		- 설명: 저장소에서 미션과 완료 기록을 불러와 기록 화면 데이터를 준비한다.  
-    		- 입력: 없음  
-    		- 출력: 없음  
+    		- 입력:   
+    		- 출력:   
 
     CalculateProgress()  
     		- 설명: 미션과 완료 기록을 바탕으로 진행 상태 목록을 계산한다.  
-    		- 입력: 없음  
+    		- 입력:   
     		- 출력: IEnumerable<MissionProgress>  
     
 
@@ -104,7 +104,7 @@ Models
     속성: Id, Title, Content, Type, TargetCount, StartDate, EndDate, ScheduledDays, CreatedAt, IsActive  
     IsWeekly()  
     		- 설명: 현재 미션이 주간 미션인지 확인한다.  
-    		- 입력: 없음  
+    		- 입력:   
     		- 출력: bool  
 
     HasScheduleOn(DayOfWeek dayOfWeek)  
@@ -132,12 +132,12 @@ Models
     속성: MissionId, CurrentCount, TargetCount, CompletionRate, IsCompleted  
     GetRemainingCount()  
     		- 설명: 목표 횟수까지 남은 수행 횟수를 계산한다.  
-    		- 입력: 없음  
+    		- 입력:   
     		- 출력: int  
 
     HasPartialProgress()  
     		- 설명: 완료 전이지만 일부 진행된 상태인지 확인한다.  
-    		- 입력: 없음  
+    		- 입력:   
     		- 출력: bool  
     
 
@@ -149,7 +149,7 @@ Repositories
     속성: 없음  
     GetAllMissions()  
     		- 설명: 저장된 모든 미션을 조회한다.  
-    		- 입력: 없음  
+    		- 입력:   
     		- 출력: IEnumerable<Mission>  
 
     GetMissionById(Guid missionId)  
@@ -160,12 +160,12 @@ Repositories
     SaveMission(Mission mission)  
     		- 설명: 미션을 새로 저장하거나 기존 미션을 갱신한다.  
     		- 입력: 저장할 Mission  
-    		- 출력: 없음  
+    		- 출력:   
 
     DeleteMission(Guid missionId)  
     		- 설명: 지정한 식별자의 미션을 삭제한다.  
     		- 입력: 삭제할 Guid missionId  
-    		- 출력: 없음  
+    		- 출력:   
 
     GetCompletionRecords(Guid missionId)  
     		- 설명: 지정한 미션의 완료 기록 목록을 조회한다.  
@@ -175,7 +175,7 @@ Repositories
     SaveCompletionRecord(MissionCompletionRecord record)  
     		- 설명: 미션 완료 기록을 저장한다.  
     		- 입력: 저장할 MissionCompletionRecord  
-    		- 출력: 없음  
+    		- 출력:   
     
 - MissionRepository
     
@@ -183,7 +183,7 @@ Repositories
     속성: 없음  
     GetAllMissions()  
     		- 설명: 저장된 모든 미션을 조회한다.  
-    		- 입력: 없음  
+    		- 입력:   
     		- 출력: IEnumerable<Mission>  
 
     GetMissionById(Guid missionId)  
@@ -194,12 +194,12 @@ Repositories
     SaveMission(Mission mission)  
     		- 설명: 미션을 새로 저장하거나 기존 미션을 갱신한다.  
     		- 입력: 저장할 Mission  
-    		- 출력: 없음  
+    		- 출력:   
 
     DeleteMission(Guid missionId)  
     		- 설명: 지정한 식별자의 미션을 삭제한다.  
     		- 입력: 삭제할 Guid missionId  
-    		- 출력: 없음  
+    		- 출력:   
 
     GetCompletionRecords(Guid missionId)  
     		- 설명: 지정한 미션의 완료 기록 목록을 조회한다.  
@@ -209,7 +209,7 @@ Repositories
     SaveCompletionRecord(MissionCompletionRecord record)  
     		- 설명: 미션 완료 기록을 저장한다.  
     		- 입력: 저장할 MissionCompletionRecord  
-    		- 출력: 없음  
+    		- 출력:   
     
 
 Commands
@@ -226,7 +226,7 @@ Commands
     Execute(object parameter)  
     		- 설명: AddMissionViewModel의 입력값을 바탕으로 미션을 저장한다.  
     		- 입력: Command parameter  
-    		- 출력: 없음  
+    		- 출력:   
     
 - DeleteMissionCommand
 
@@ -240,7 +240,7 @@ Commands
     Execute(object parameter)  
     		- 설명: 삭제 모드로 전환하거나 선택된 미션을 삭제한다.  
     		- 입력: Command parameter  
-    		- 출력: 없음  
+    		- 출력:   
 
 - CompleteMissionCommand
 
@@ -254,7 +254,7 @@ Commands
     Execute(object parameter)  
     		- 설명: 선택된 미션의 완료 기록을 저장하고 진행 상태를 갱신한다.  
     		- 입력: Command parameter  
-    		- 출력: 없음  
+    		- 출력:   
 
 - OpenAddMissionCommand
 
@@ -268,7 +268,7 @@ Commands
     Execute(object parameter)  
     		- 설명: AddMissionWindow를 열어 새 미션을 입력할 수 있게 한다.  
     		- 입력: Command parameter  
-    		- 출력: 없음  
+    		- 출력:   
 
 - OpenMissionHistoryCommand
 
@@ -282,7 +282,7 @@ Commands
     Execute(object parameter)  
     		- 설명: MissionHistoryWindow를 열어 완료 이력을 확인할 수 있게 한다.  
     		- 입력: Command parameter  
-    		- 출력: 없음  
+    		- 출력:   
 
 Services/Time
 
@@ -303,7 +303,7 @@ Services/Time
     SetNow(DateTimeOffset now)  
     		- 설명: 테스트에서 사용할 현재 시간을 지정한 값으로 변경한다.  
     		- 입력: 설정할 DateTimeOffset now  
-    		- 출력: 없음  
+    		- 출력:   
 
 - MissionPeriodService
 
@@ -311,12 +311,12 @@ Services/Time
     속성: 없음  
     GetDailyKey()  
     		- 설명: 현재 날짜를 기준으로 일일 미션의 기간 키를 반환한다.  
-    		- 입력: 없음  
+    		- 입력:   
     		- 출력: DateOnly  
 
     GetWeeklyKey()  
     		- 설명: 현재 날짜를 기준으로 주간 미션의 기간 키를 반환한다.  
-    		- 입력: 없음  
+    		- 입력:   
     		- 출력: DateOnly  
 
     GetWeeklyKey(DateOnly date)  
