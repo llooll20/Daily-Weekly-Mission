@@ -115,22 +115,31 @@ classDiagram
 
     namespace Commands {
         class SaveMissionCommand {
+            +AddMissionViewModel ViewModel
+            +IMissionRepository MissionRepository
             +bool CanExecute(object parameter)
             +void Execute(object parameter)
         }
         class DeleteMissionCommand {
+            +MainViewModel ViewModel
+            +IMissionRepository MissionRepository
             +bool CanExecute(object parameter)
             +void Execute(object parameter)
         }
         class CompleteMissionCommand {
+            +MainViewModel ViewModel
+            +IMissionRepository MissionRepository
+            +MissionPeriodService MissionPeriodService
             +bool CanExecute(object parameter)
             +void Execute(object parameter)
         }
         class OpenAddMissionCommand {
+            +MainViewModel ViewModel
             +bool CanExecute(object parameter)
             +void Execute(object parameter)
         }
         class OpenMissionHistoryCommand {
+            +MainViewModel ViewModel
             +bool CanExecute(object parameter)
             +void Execute(object parameter)
         }
