@@ -46,3 +46,4 @@
 - [프로젝트 개요](docs/overview/project-overview.md)
 - [화면 Mockup](docs/mockups/화면%20디자인(MockUp)%2035878ac9a7988097922ace2981bf20bd.md)
 - [유스케이스 다이어그램](docs/diagrams/usecase/usecase.png)
+- [저장 형식](docs/storage/storage-format.md)

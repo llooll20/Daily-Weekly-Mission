@@ -169,13 +169,43 @@ classDiagram
         }
     }
 
-    MainWindow --> MainViewModel
-    AddMissionWindow --> AddMissionViewModel
-    MissionHistoryWindow --> MissionHistoryViewModel
+    MainWindow --> MainViewModel : DataContext
+    AddMissionWindow --> AddMissionViewModel : DataContext
+    MissionHistoryWindow --> MissionHistoryViewModel : DataContext
 
-    MainViewModel --> DeleteMissionCommand
-    MainViewModel --> CompleteMissionCommand
-    MainViewModel --> OpenAddMissionCommand
-    MainViewModel --> OpenMissionHistoryCommand
-    AddMissionViewModel --> SaveMissionCommand
+    MainViewModel --> Mission : displays
+    MainViewModel --> DeleteMissionCommand : owns
+    MainViewModel --> CompleteMissionCommand : owns
+    MainViewModel --> OpenAddMissionCommand : owns
+    MainViewModel --> OpenMissionHistoryCommand : owns
+    AddMissionViewModel --> SaveMissionCommand : owns
+    AddMissionViewModel --> Mission : creates
+    MissionHistoryViewModel --> Mission : displays
+    MissionHistoryViewModel --> MissionProgress : displays
+    MissionHistoryViewModel --> IMissionRepository : reads
+
+    SaveMissionCommand --> AddMissionViewModel : reads input
+    SaveMissionCommand --> IMissionRepository : saves
+    DeleteMissionCommand --> MainViewModel : updates state
+    DeleteMissionCommand --> IMissionRepository : deletes
+    CompleteMissionCommand --> MainViewModel : updates state
+    CompleteMissionCommand --> IMissionRepository : saves record
+    CompleteMissionCommand --> MissionPeriodService : gets period key
+    OpenAddMissionCommand --> MainViewModel : requests navigation
+    OpenMissionHistoryCommand --> MainViewModel : requests navigation
+
+    MissionRepository ..|> IMissionRepository
+    IMissionRepository --> Mission : stores
+    IMissionRepository --> MissionCompletionRecord : stores
+    MissionRepository --> Mission : stores
+    MissionRepository --> MissionCompletionRecord : stores
+
+    Mission --> MissionType : uses
+    MissionCompletionRecord --> Mission : references
+    MissionProgress --> Mission : summarizes
+    MissionProgress --> MissionCompletionRecord : calculated from
+
+    MissionPeriodService --> IClock : uses
+    SystemClock ..|> IClock
+    FakeClock ..|> IClock
 ```
