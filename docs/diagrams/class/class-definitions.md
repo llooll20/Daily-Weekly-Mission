@@ -46,7 +46,7 @@ ViewModels
 
 - MainViewModel
     
-    MainWindow의 화면 상태와 동작을 관리하는 ViewModel이다. 미션 삭제, 미션 완료 처리, 미션 추가 창 열기, 미션 기록 창 열기 기능을 위해 DeleteMissionCommand, CompleteMissionCommand, OpenAddMissionCommand, OpenMissionHistoryCommand를 가진다.  
+    MainWindow의 화면 상태와 동작을 관리하는 ViewModel이다. 미션 삭제, 미션 완료 처리, 일일/주간 미션 추가 창 열기, 미션 기록 창 열기 기능을 위해 DeleteMissionCommand, CompleteMissionCommand, OpenAddDailyMissionCommand, OpenAddWeeklyMissionCommand, OpenMissionHistoryCommand를 가진다.  
 
     속성:  
     	- DailyMissions  
@@ -54,7 +54,8 @@ ViewModels
     	- IsDeleteMode  
     	- DeleteMissionCommand  
     	- CompleteMissionCommand  
-    	- OpenAddMissionCommand  
+    	- OpenAddDailyMissionCommand  
+    	- OpenAddWeeklyMissionCommand  
     	- OpenMissionHistoryCommand  
     LoadMissions()  
     		- 설명: 저장소에서 미션 목록을 불러와 일일 미션과 주간 미션으로 나눈다.  
@@ -83,7 +84,9 @@ ViewModels
     속성:  
     	- Title  
     	- Content  
-    	- SelectedMissionType  
+    	- MissionType  
+    	- IsDailyMission  
+    	- IsWeeklyMission  
     	- TargetCount  
     	- StartDate  
     	- EndDate  
@@ -324,19 +327,35 @@ Commands
     		- 입력: Command parameter  
     		- 출력:   
 
-- OpenAddMissionCommand
+- OpenAddDailyMissionCommand
 
-    MainWindow에서 미션 추가 버튼을 눌렀을 때 실행되는 Command이다. 새로운 미션을 입력할 수 있도록 AddMissionWindow를 연다.  
+    MainWindow의 일일 미션 영역에서 추가 버튼을 눌렀을 때 실행되는 Command이다. MissionType이 Daily로 지정된 AddMissionWindow를 연다.  
 
     속성:  
     	- MainViewModel ViewModel  
     CanExecute(object parameter)  
-    		- 설명: 현재 상태에서 미션 추가 창 열기 명령을 실행할 수 있는지 확인한다.  
+    		- 설명: 현재 상태에서 일일 미션 추가 창 열기 명령을 실행할 수 있는지 확인한다.  
     		- 입력: Command parameter  
     		- 출력: bool  
 
     Execute(object parameter)  
-    		- 설명: AddMissionWindow를 열어 새 미션을 입력할 수 있게 한다.  
+    		- 설명: 일일 미션을 입력할 수 있도록 AddMissionWindow를 연다.  
+    		- 입력: Command parameter  
+    		- 출력:   
+
+- OpenAddWeeklyMissionCommand
+
+    MainWindow의 주간 미션 영역에서 추가 버튼을 눌렀을 때 실행되는 Command이다. MissionType이 Weekly로 지정된 AddMissionWindow를 연다.  
+
+    속성:  
+    	- MainViewModel ViewModel  
+    CanExecute(object parameter)  
+    		- 설명: 현재 상태에서 주간 미션 추가 창 열기 명령을 실행할 수 있는지 확인한다.  
+    		- 입력: Command parameter  
+    		- 출력: bool  
+
+    Execute(object parameter)  
+    		- 설명: 주간 미션을 입력할 수 있도록 AddMissionWindow를 연다.  
     		- 입력: Command parameter  
     		- 출력:   
 

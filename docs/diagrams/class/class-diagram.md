@@ -24,7 +24,8 @@ classDiagram
             +bool IsDeleteMode
             +DeleteMissionCommand DeleteMissionCommand
             +CompleteMissionCommand CompleteMissionCommand
-            +OpenAddMissionCommand OpenAddMissionCommand
+            +OpenAddDailyMissionCommand OpenAddDailyMissionCommand
+            +OpenAddWeeklyMissionCommand OpenAddWeeklyMissionCommand
             +OpenMissionHistoryCommand OpenMissionHistoryCommand
             +void LoadMissions()
             +void EnterDeleteMode()
@@ -34,7 +35,9 @@ classDiagram
         class AddMissionViewModel {
             +string Title
             +string Content
-            +MissionType SelectedMissionType
+            +MissionType MissionType
+            +bool IsDailyMission
+            +bool IsWeeklyMission
             +int TargetCount
             +DateOnly StartDate
             +DateOnly EndDate
@@ -133,7 +136,12 @@ classDiagram
             +bool CanExecute(object parameter)
             +void Execute(object parameter)
         }
-        class OpenAddMissionCommand {
+        class OpenAddDailyMissionCommand {
+            +MainViewModel ViewModel
+            +bool CanExecute(object parameter)
+            +void Execute(object parameter)
+        }
+        class OpenAddWeeklyMissionCommand {
             +MainViewModel ViewModel
             +bool CanExecute(object parameter)
             +void Execute(object parameter)
@@ -176,10 +184,12 @@ classDiagram
     MainViewModel --> Mission : displays
     MainViewModel --> DeleteMissionCommand : owns
     MainViewModel --> CompleteMissionCommand : owns
-    MainViewModel --> OpenAddMissionCommand : owns
+    MainViewModel --> OpenAddDailyMissionCommand : owns
+    MainViewModel --> OpenAddWeeklyMissionCommand : owns
     MainViewModel --> OpenMissionHistoryCommand : owns
     AddMissionViewModel --> SaveMissionCommand : owns
     AddMissionViewModel --> Mission : creates
+    AddMissionViewModel --> MissionType : uses
     MissionHistoryViewModel --> Mission : displays
     MissionHistoryViewModel --> MissionProgress : displays
     MissionHistoryViewModel --> IMissionRepository : reads
@@ -191,7 +201,8 @@ classDiagram
     CompleteMissionCommand --> MainViewModel : updates state
     CompleteMissionCommand --> IMissionRepository : saves record
     CompleteMissionCommand --> MissionPeriodService : gets period key
-    OpenAddMissionCommand --> MainViewModel : requests navigation
+    OpenAddDailyMissionCommand --> MainViewModel : requests daily add
+    OpenAddWeeklyMissionCommand --> MainViewModel : requests weekly add
     OpenMissionHistoryCommand --> MainViewModel : requests navigation
 
     MissionRepository ..|> IMissionRepository
