@@ -18,10 +18,24 @@ namespace Wpf_study.DesignPattern.MVVM.Services.Time
 
         public DateOnly GetWeeklyKey()
         {
-            DateOnly today = clock.Today;
-            int diff = ((int)today.DayOfWeek - (int)DayOfWeek.Monday + 7) % 7;
+            return GetWeeklyKey(clock.Today);
+        }
 
-            return today.AddDays(-diff);
+        public DateOnly GetWeeklyKey(DateOnly date)
+        {
+            int diff = ((int)date.DayOfWeek - (int)DayOfWeek.Monday + 7) % 7;
+
+            return date.AddDays(-diff);
+        }
+
+        public bool IsDailyMissionDate(DateOnly missionDate)
+        {
+            return missionDate == GetDailyKey();
+        }
+
+        public bool IsWeeklyMissionDate(DateOnly missionDate)
+        {
+            return GetWeeklyKey(missionDate) == GetWeeklyKey();
         }
     }
 }

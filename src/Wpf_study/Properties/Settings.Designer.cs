@@ -34,5 +34,29 @@ namespace Wpf_study.Properties {
                 this["PeopleJson"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string MissionsJson {
+            get {
+                return ((string)(this["MissionsJson"]));
+            }
+            set {
+                this["MissionsJson"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string CompletionRecordsJson {
+            get {
+                return ((string)(this["CompletionRecordsJson"]));
+            }
+            set {
+                this["CompletionRecordsJson"] = value;
+            }
+        }
     }
 }

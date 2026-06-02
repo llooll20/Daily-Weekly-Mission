@@ -1,10 +1,10 @@
 using System.Windows;
 
-namespace Wpf_study
+namespace Wpf_study.DesignPattern.MVVM.Views
 {
-    public partial class MainWindow : Window
+    public partial class AddMissionWindow : Window
     {
-        public MainWindow()
+        public AddMissionWindow()
         {
             InitializeComponent();
         }
