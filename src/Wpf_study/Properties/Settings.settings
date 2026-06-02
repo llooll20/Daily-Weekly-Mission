@@ -2,9 +2,6 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Wpf_study.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="PeopleJson" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
     <Setting Name="MissionsJson" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>

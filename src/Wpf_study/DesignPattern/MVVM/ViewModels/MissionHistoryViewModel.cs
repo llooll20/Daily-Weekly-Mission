@@ -1,6 +1,6 @@
 namespace Wpf_study.DesignPattern.MVVM.ViewModels
 {
-    public class MainViewModel
+    public class MissionHistoryViewModel
     {
     }
 }

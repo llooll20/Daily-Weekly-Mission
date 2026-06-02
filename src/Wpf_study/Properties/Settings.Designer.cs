@@ -26,18 +26,6 @@ namespace Wpf_study.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string PeopleJson {
-            get {
-                return ((string)(this["PeopleJson"]));
-            }
-            set {
-                this["PeopleJson"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string MissionsJson {
             get {
                 return ((string)(this["MissionsJson"]));
