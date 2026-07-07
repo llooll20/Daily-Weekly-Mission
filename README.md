@@ -78,7 +78,7 @@ docs/
 - [저장 형식](docs/storage/storage-format.md)
 - [클래스 다이어그램](docs/diagrams/class/class-diagram.md)
 - [클래스 정의](docs/diagrams/class/class-definitions.md)
-- [유스케이스 다이어그램](docs/diagrams/usecase/usecase.png)
+- [유스케이스 다이어그램](docs/diagrams/usecase/usecase_diagram.md)
 - [화면 목업](docs/mockups/)
 
 ## 기술 스택
