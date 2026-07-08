@@ -1,0 +1,107 @@
+Create a desktop WPF-style mission management app UI.
+
+App name: Daily Weekly Mission
+
+Design a clean, compact desktop application window for managing daily and weekly missions. The UI should feel like a practical productivity tool, not a landing page.
+
+Create these screens:
+
+1. Main Mission Window
+- The main window is the first screen shown when the app starts.
+- Use a custom title bar at the top.
+- Place three icon buttons on the title bar:
+  - Plus icon for adding a mission
+  - History/list icon for opening mission history
+  - X icon for closing the window
+- The main content is divided into two clear sections:
+  - Weekly Missions
+  - Daily Missions
+- Each section contains multiple mission cards.
+- Each mission card includes:
+  - Mission title
+  - Mission content
+  - Progress state
+  - Progress bar or segmented progress indicator
+  - Completion circle on the right
+  - Check mark when completed
+- Completed missions should look disabled:
+  - Lower opacity
+  - Muted text
+  - Checked completion circle
+- Weekly missions should support two types:
+  - Count-based weekly mission, example: exercise 1/3 times
+  - Day-of-week mission, example: cleaning on Monday and Thursday
+- For day-of-week missions, show weekdays in a row.
+  - Highlight the current day
+  - Mark scheduled days with small circles or emphasized states
+- Weekly missions reset visually when a new week begins.
+- Daily missions use the same progress style as count-based weekly missions.
+
+2. Delete Mode State
+- Add a variation of the Main Mission Window for delete mode.
+- When delete mode is active, show a small message: "Select a mission to delete".
+- Mission cards should become selectable.
+- The selected or hovered mission should have a red outline or subtle danger highlight.
+- Keep the screen layout the same, but make delete mode visually obvious.
+
+3. Add Mission Window
+- Create a modal-like desktop window for adding a mission.
+- Include input fields:
+  - Mission title
+  - Mission content
+  - Mission type selector: Daily / Weekly
+  - Target count
+  - Start date
+  - End date
+- If Weekly is selected, show weekday selection buttons:
+  - Mon, Tue, Wed, Thu, Fri, Sat, Sun
+- Add a confirm/save button at the bottom.
+- Add a cancel/close button.
+- The design should clearly show the difference between Daily and Weekly mission creation.
+
+4. Mission History Window
+- Create a window for viewing mission history.
+- Include a mission list area.
+- When a mission is selected, show its historical progress.
+- Show:
+  - Mission title
+  - Mission type
+  - Current count / target count
+  - Completion rate percentage
+  - Completed dates
+  - Weekly period display, example: 2026-05-25 ~ 2026-05-31
+- Include visual states for:
+  - Not started
+  - Partially completed
+  - Completed
+- Use a simple calendar or timeline-like area for history.
+
+Visual style:
+- Design the UI to look similar to Windows Sticky Notes.
+- Use a sticky-note-inspired visual style.
+- Warm yellow note-like main background.
+- Simple flat surfaces with minimal decoration.
+- Soft shadow around the window to feel like a floating note.
+- Compact custom title bar similar to a small desktop note.
+- Mission cards should feel like checklist items placed inside a sticky note.
+- Use simple, readable typography.
+- Use minimal icon buttons.
+- Use restrained colors:
+  - Warm yellow for the main note background
+  - Slightly darker yellow or beige for section areas
+  - Blue or green for progress
+  - Red only for delete mode
+  - Muted gray for completed/disabled missions
+- Avoid dashboard-style UI.
+- Avoid heavy borders, decorative gradients, or large illustrations.
+- Prioritize a lightweight desktop note feel and implementation-friendly layout.
+
+Layout requirements:
+- Desktop size around 800x450 or 900x600.
+- Design components that can be reused:
+  - MissionCard
+  - ProgressIndicator
+  - WeekdaySelector
+  - TitleBarButton
+  - MissionSection
+- Make spacing, typography, and states consistent.
