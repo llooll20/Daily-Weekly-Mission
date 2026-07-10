@@ -7,6 +7,7 @@ using DailyWeeklyMission.Properties;
 
 namespace DailyWeeklyMission.Repositories
 {
+    // 프로그램 내 저장 방식을 담당하는 MissionRepository 클래스
     public class MissionRepository : IMissionRepository
     {
         private readonly JsonSerializerOptions jsonOptions = new()

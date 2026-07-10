@@ -10,8 +10,8 @@ namespace DailyWeeklyMission.Models
         public string Content { get; set; } = string.Empty;
         public MissionType Type { get; set; }
         public int TargetCount { get; set; } = 1;
-        public DateOnly StartDate { get; set; } = DateOnly.FromDateTime(DateTime.Today);
-        public DateOnly EndDate { get; set; } = DateOnly.FromDateTime(DateTime.Today);
+        public DateTime? StartDate { get; set; } = DateTime.Today;
+        public DateTime? EndDate { get; set; } = DateTime.Today;
         public List<DayOfWeek> ScheduledDays { get; set; } = new();
         public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.Now;
         public bool IsActive { get; set; } = true;

@@ -4,6 +4,7 @@ using DailyWeeklyMission.Models;
 
 namespace DailyWeeklyMission.Repositories
 {
+    // 미션 데이터를 관리하는 인터페이스
     public interface IMissionRepository
     {
         IEnumerable<Mission> GetAllMissions();

@@ -1,193 +1,201 @@
-<Window x:Class="DailyWeeklyMission.Views.AddMissionWindow"
+﻿<Window x:Class="DailyWeeklyMission.Views.AddMissionWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d"
         Title="Add Mission"
-        Width="760"
-        Height="760"
-        MinWidth="620"
-        MinHeight="620"
-        WindowStartupLocation="CenterOwner"
+        Width="600" SizeToContent="Height"
+        WindowStartupLocation="CenterScreen"
         WindowStyle="None"
         AllowsTransparency="True"
-        Background="Transparent">
-    <Window.Resources>
-        <SolidColorBrush x:Key="NoteBackgroundBrush" Color="#FFF9E8"/>
-        <SolidColorBrush x:Key="NoteLineBrush" Color="#F5C542"/>
-        <SolidColorBrush x:Key="PrimaryBrush" Color="#2F7DF6"/>
+        Background="Transparent"
+        ResizeMode="NoResize">
 
-        <Style x:Key="FieldLabelStyle" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="16"/>
-            <Setter Property="Foreground" Value="#1F2937"/>
-            <Setter Property="Margin" Value="0 0 0 8"/>
-        </Style>
+    <Border CornerRadius="8">
+        <Border.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#FEF3C7" Offset="0"/>
+                <GradientStop Color="#FDE68A" Offset="1"/>
+            </LinearGradientBrush>
+        </Border.Background>
 
-        <Style x:Key="InputBoxStyle" TargetType="TextBox">
-            <Setter Property="Height" Value="48"/>
-            <Setter Property="FontSize" Value="18"/>
-            <Setter Property="Padding" Value="14 0"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="BorderBrush" Value="#F2C438"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="Background" Value="White"/>
-        </Style>
+        <Border Margin="32" Background="{StaticResource Amber50}"
+                CornerRadius="8" ClipToBounds="True">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="24" ShadowDepth="4" Opacity="0.18" Color="#000000"/>
+            </Border.Effect>
 
-        <Style x:Key="ActionButtonStyle" TargetType="Button">
-            <Setter Property="Height" Value="54"/>
-            <Setter Property="FontSize" Value="18"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Cursor" Value="Hand"/>
-        </Style>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
 
-        <Style x:Key="WeekdayButtonStyle" TargetType="Button" BasedOn="{StaticResource ActionButtonStyle}">
-            <Setter Property="Width" Value="58"/>
-            <Setter Property="Height" Value="58"/>
-            <Setter Property="Margin" Value="0 0 18 0"/>
-            <Setter Property="Background" Value="#FFE178"/>
-            <Setter Property="Foreground" Value="#1F2937"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}"
-                                CornerRadius="29">
-                            <ContentPresenter HorizontalAlignment="Center"
-                                              VerticalAlignment="Center"/>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-    </Window.Resources>
+                <!-- ?? ??댄?諛??? -->
+                <Border Grid.Row="0"
+                        Background="{StaticResource Amber100}"
+                        BorderBrush="{StaticResource Amber300}"
+                        BorderThickness="0,0,0,1"
+                        Padding="16,8"
+                        MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
+                    <Grid>
+                        <TextBlock Text="Add Mission"
+                                   FontSize="16" FontWeight="SemiBold"
+                                   Foreground="{StaticResource Gray800}"
+                                   VerticalAlignment="Center"/>
+                        <Button HorizontalAlignment="Right"
+                                Style="{StaticResource TitleBarButtonStyle}"
+                                Click="BtnClose_Click">
+                            <Path Data="M18 6 6 18M6 6l12 12"
+                                  Stroke="{StaticResource Gray700}"
+                                  StrokeThickness="1.8"
+                                  StrokeStartLineCap="Round"
+                                  StrokeEndLineCap="Round"
+                                  Width="18" Height="18"
+                                  Stretch="Uniform"
+                                  Fill="Transparent"/>
+                        </Button>
+                    </Grid>
+                </Border>
 
-    <Border Margin="4"
-            Background="{StaticResource NoteBackgroundBrush}"
-            BorderBrush="#F4D05A"
-            BorderThickness="1"
-            CornerRadius="8">
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="64"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
+                <!-- ?? ??肄섑뀗痢??? -->
+                <StackPanel Grid.Row="1" Margin="24">
 
-            <Grid Grid.Row="0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-                <TextBlock Text="Add Mission"
-                           Margin="22 0"
-                           VerticalAlignment="Center"
-                           FontSize="26"
-                           FontWeight="SemiBold"
-                           Foreground="#111827"/>
-                <Button Grid.Column="1"
-                        Content="x"
-                        Width="42"
-                        Height="42"
-                        Margin="0 0 18 0"
-                        FontSize="26"
-                        BorderThickness="0"
-                        Background="Transparent"
-                        Foreground="#1F2937"
-                        Click="CloseButtonClick"/>
-            </Grid>
+                    <!-- Mission Title -->
+                    <StackPanel>
+                        <TextBlock Text="Mission Title"
+                                   FontSize="13" FontWeight="Medium"
+                                   Foreground="{StaticResource Gray700}"/>
+                        <TextBox x:Name="TxtTitle"
+                                 Style="{StaticResource FormInputStyle}"
+                                 Text="{Binding Title, UpdateSourceTrigger=Explicit}"
+                                 Tag="Enter mission title"/>
+                    </StackPanel>
 
-            <Border Grid.Row="0"
-                    Height="1"
-                    VerticalAlignment="Bottom"
-                    Background="{StaticResource NoteLineBrush}"/>
+                    <!-- Mission Content -->
+                    <StackPanel>
+                        <TextBlock Text="Mission Content"
+                                   FontSize="13" FontWeight="Medium"
+                                   Foreground="{StaticResource Gray700}"/>
+                        <TextBox x:Name="TxtContent"
+                                 Height="72"
+                                 TextWrapping="Wrap"
+                                 AcceptsReturn="True"
+                                 VerticalScrollBarVisibility="Auto"
+                                 Padding="8"
+                                 Background="White"
+                                 BorderBrush="{StaticResource Amber300}"
+                                 BorderThickness="1"
+                                 FontSize="13"
+                                 Text="{Binding Content, UpdateSourceTrigger=Explicit}"
+                                />
+                    </StackPanel>
 
-            <ScrollViewer Grid.Row="1"
-                          VerticalScrollBarVisibility="Auto">
-                <StackPanel Margin="32 32 32 28">
-                    <TextBlock Text="Mission Title"
-                               Style="{StaticResource FieldLabelStyle}"/>
-                    <TextBox Text="Enter mission title"
-                             Foreground="#7B8490"
-                             Style="{StaticResource InputBoxStyle}"/>
+                    <!-- Mission Type -->
+                    <StackPanel>
+                        <TextBlock Text="Mission Type"
+                                   FontSize="13" FontWeight="Medium"
+                                   Foreground="{StaticResource Gray700}"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="12"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <ToggleButton x:Name="BtnTypeDaily"
+                                          Grid.Column="0"
+                                          Content="Daily"
+                                          Style="{StaticResource TypeToggleButtonStyle}"
+                                          IsChecked="True"
+                                          Click="BtnTypeDaily_Click"/>
+                            <ToggleButton x:Name="BtnTypeWeekly"
+                                          Grid.Column="2"
+                                          Content="Weekly"
+                                          Style="{StaticResource TypeToggleButtonStyle}"
+                                          Click="BtnTypeWeekly_Click"/>
+                        </Grid>
+                    </StackPanel>
 
-                    <TextBlock Text="Mission Content"
-                               Style="{StaticResource FieldLabelStyle}"
-                               Margin="0 26 0 8"/>
-                    <TextBox Text="Enter mission description"
-                             Height="140"
-                             AcceptsReturn="True"
-                             TextWrapping="Wrap"
-                             VerticalContentAlignment="Top"
-                             Padding="14 14"
-                             Foreground="#7B8490"
-                             Style="{StaticResource InputBoxStyle}"/>
-
-                    <TextBlock Text="Target Count"
-                               Style="{StaticResource FieldLabelStyle}"
-                               Margin="0 28 0 8"/>
-                    <TextBox Text="e.g., 3"
-                             Foreground="#7B8490"
-                             Style="{StaticResource InputBoxStyle}"/>
-
-                    <Grid Margin="0 26 0 0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition Width="24"/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <StackPanel>
-                            <TextBlock Text="Start Date"
-                                       Style="{StaticResource FieldLabelStyle}"/>
-                            <TextBox Text="yyyy .  mm .  dd ."
-                                     Style="{StaticResource InputBoxStyle}"/>
+                    <!-- ?붿씪 ?좏깮 (Weekly ?좏깮 ?쒕쭔 ?쒖떆) -->
+                    <StackPanel x:Name="WeekdayPanel" Visibility="Collapsed">
+                        <TextBlock Text="Select Days"
+                                   FontSize="13" FontWeight="Medium"
+                                   Foreground="{StaticResource Gray700}"/>
+                        <StackPanel Orientation="Horizontal">
+                            <ToggleButton Content="M" Style="{StaticResource WeekdayButtonStyle}" Tag="1"/>
+                            <ToggleButton Content="T" Style="{StaticResource WeekdayButtonStyle}" Tag="2"/>
+                            <ToggleButton Content="W" Style="{StaticResource WeekdayButtonStyle}" Tag="3"/>
+                            <ToggleButton Content="T" Style="{StaticResource WeekdayButtonStyle}" Tag="4"/>
+                            <ToggleButton Content="F" Style="{StaticResource WeekdayButtonStyle}" Tag="5"/>
+                            <ToggleButton Content="S" Style="{StaticResource WeekendButtonStyle}" Tag="6"/>
+                            <ToggleButton Content="S" Style="{StaticResource WeekendButtonStyle}" Tag="7"/>
                         </StackPanel>
+                    </StackPanel>
+
+                    <!-- Target Count -->
+                    <StackPanel>
+                        <TextBlock Text="Target Count"
+                                   FontSize="13" FontWeight="Medium"
+                                   Foreground="{StaticResource Gray700}"/>
+                        <TextBox x:Name="TxtTarget"
+                                 Style="{StaticResource FormInputStyle}"
+                                 Tag="e.g., 3"
+                                 Text="{Binding TargetCount, UpdateSourceTrigger=Explicit}"
+                                 />
+                    </StackPanel>
+
+                    <!-- Start / End Date -->
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="16"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="Start Date"
+                                       FontSize="13" FontWeight="Medium"
+                                       Foreground="{StaticResource Gray700}"/>
+                            <DatePicker x:Name="DpStart"
+                                        Height="34"
+                                        Background="White"
+                                        BorderBrush="{StaticResource Amber300}"
+                                        FontSize="13"
+                                        SelectedDate="{Binding StartDate, Mode=TwoWay}"
+                                        />
+                        </StackPanel>
+
                         <StackPanel Grid.Column="2">
                             <TextBlock Text="End Date"
-                                       Style="{StaticResource FieldLabelStyle}"/>
-                            <TextBox Text="yyyy .  mm .  dd ."
-                                     Style="{StaticResource InputBoxStyle}"/>
+                                       FontSize="13" FontWeight="Medium"
+                                       Foreground="{StaticResource Gray700}"/>
+                            <DatePicker x:Name="DpEnd"
+                                        Height="34"
+                                        Background="White"
+                                        BorderBrush="{StaticResource Amber300}"
+                                        FontSize="13"
+                                        SelectedDate="{Binding StartDate, Mode=TwoWay}"
+                                        />
                         </StackPanel>
                     </Grid>
 
-                    <Border Margin="0 30 0 0"
-                            Padding="18"
-                            Background="#FFF3C7"
-                            CornerRadius="4">
-                        <StackPanel>
-                            <TextBlock Text="Select Days"
-                                       FontSize="18"
-                                       Foreground="#1F2937"
-                                       Margin="0 0 0 16"/>
-                            <StackPanel Orientation="Horizontal">
-                                <Button Content="M" Style="{StaticResource WeekdayButtonStyle}"/>
-                                <Button Content="T" Style="{StaticResource WeekdayButtonStyle}"/>
-                                <Button Content="W" Style="{StaticResource WeekdayButtonStyle}"/>
-                                <Button Content="T" Style="{StaticResource WeekdayButtonStyle}"/>
-                                <Button Content="F" Style="{StaticResource WeekdayButtonStyle}"/>
-                                <Button Content="S" Style="{StaticResource WeekdayButtonStyle}"/>
-                                <Button Content="S" Style="{StaticResource WeekdayButtonStyle}"/>
-                            </StackPanel>
-                        </StackPanel>
-                    </Border>
-
-                    <Grid Margin="0 30 0 0">
+                    <!-- Cancel / Save -->
+                    <Grid Margin="0,8,0,0">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition Width="20"/>
-                            <ColumnDefinition/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="16"/>
+                            <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Button Content="Cancel"
-                                Grid.Column="0"
-                                Background="#D1D5DB"
-                                Foreground="#1F2937"
-                                Style="{StaticResource ActionButtonStyle}"/>
-                        <Button Content="Save Mission"
-                                Grid.Column="2"
-                                Background="{StaticResource PrimaryBrush}"
-                                Foreground="White"
-                                Style="{StaticResource ActionButtonStyle}"/>
+                        <Button Grid.Column="0"
+                                Content="Cancel"
+                                Style="{StaticResource SecondaryButtonStyle}"
+                                Click="BtnCancel_Click"/>
+                        <Button Grid.Column="2"
+                                Content="Save Mission"
+                                Style="{StaticResource PrimaryButtonStyle}"
+                                Click="BtnSave_Click"/>
                     </Grid>
+
                 </StackPanel>
-            </ScrollViewer>
-        </Grid>
+            </Grid>
+        </Border>
     </Border>
 </Window>
