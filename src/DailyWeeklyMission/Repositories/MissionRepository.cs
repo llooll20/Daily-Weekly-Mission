@@ -118,5 +118,10 @@ namespace DailyWeeklyMission.Repositories
 
             return JsonSerializer.Deserialize<List<T>>(jsonData) ?? new List<T>();
         }
+        public void ClearMissions()
+        {
+            SaveMissions(new List<Mission>());
+        }
     }
+  
 }

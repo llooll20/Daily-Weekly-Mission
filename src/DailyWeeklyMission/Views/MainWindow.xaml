@@ -155,7 +155,7 @@
                                 </Button>
                             </Grid>
 
-                            <!-- Weekly 誘몄뀡 移대뱶 紐⑸줉 -->
+                            <!-- WeeklyMission 리스트 -->
                             <ItemsControl x:Name="WeeklyMissionsList">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
@@ -264,7 +264,8 @@
                             </Grid>
 
                             <!-- Daily 誘몄뀡 移대뱶 紐⑸줉 -->
-                            <ItemsControl x:Name="DailyMissionsList">
+                            <ItemsControl x:Name="DailyMissionsList" 
+                                          ItemsSource="{Binding WeeklyMissions}">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
                                         <Border Margin="0,0,0,12"

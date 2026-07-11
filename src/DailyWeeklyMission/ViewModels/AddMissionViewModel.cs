@@ -11,7 +11,7 @@ namespace DailyWeeklyMission.ViewModels
 
         private string _title = "";
         private string _content = "";
-        private int _targetCount = 1;
+        private int _targetCount ;
         private DateTime? _startDate = DateTime.Today;
         private DateTime? _endDate = DateTime.Today;
 

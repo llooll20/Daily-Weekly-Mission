@@ -53,7 +53,7 @@ public partial class AddMissionWindow : Window
 
     private void NavigateBack()
     {
-        new MainWindow().Show();
+        DialogResult = true;
         Close();
     }
 

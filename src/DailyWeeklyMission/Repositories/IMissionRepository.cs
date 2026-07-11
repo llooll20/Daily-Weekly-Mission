@@ -13,5 +13,7 @@ namespace DailyWeeklyMission.Repositories
         void DeleteMission(Guid missionId);
         IEnumerable<MissionCompletionRecord> GetCompletionRecords(Guid missionId);
         void SaveCompletionRecord(MissionCompletionRecord record);
+
+        void ClearMissions();
     }
 }

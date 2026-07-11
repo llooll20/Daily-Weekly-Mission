@@ -66,7 +66,7 @@
                                    Foreground="{StaticResource Gray700}"/>
                         <TextBox x:Name="TxtTitle"
                                  Style="{StaticResource FormInputStyle}"
-                                 Text="{Binding Title, UpdateSourceTrigger=Explicit}"
+                                 Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}"
                                  Tag="Enter mission title"/>
                     </StackPanel>
 
@@ -85,7 +85,7 @@
                                  BorderBrush="{StaticResource Amber300}"
                                  BorderThickness="1"
                                  FontSize="13"
-                                 Text="{Binding Content, UpdateSourceTrigger=Explicit}"
+                                 Text="{Binding Content, UpdateSourceTrigger=PropertyChanged}"
                                 />
                     </StackPanel>
 
@@ -138,7 +138,7 @@
                         <TextBox x:Name="TxtTarget"
                                  Style="{StaticResource FormInputStyle}"
                                  Tag="e.g., 3"
-                                 Text="{Binding TargetCount, UpdateSourceTrigger=Explicit}"
+                                 Text="{Binding TargetCount, UpdateSourceTrigger=PropertyChanged}"
                                  />
                     </StackPanel>
 
@@ -172,7 +172,7 @@
                                         Background="White"
                                         BorderBrush="{StaticResource Amber300}"
                                         FontSize="13"
-                                        SelectedDate="{Binding StartDate, Mode=TwoWay}"
+                                        SelectedDate="{Binding EndDate, Mode=TwoWay}"
                                         />
                         </StackPanel>
                     </Grid>
@@ -191,7 +191,9 @@
                         <Button Grid.Column="2"
                                 Content="Save Mission"
                                 Style="{StaticResource PrimaryButtonStyle}"
-                                Click="BtnSave_Click"/>
+                                Click="BtnSave_Click"
+                                Command="{Binding SaveMissionCommand}" Height="38" VerticalAlignment="Top"
+                                />
                     </Grid>
 
                 </StackPanel>

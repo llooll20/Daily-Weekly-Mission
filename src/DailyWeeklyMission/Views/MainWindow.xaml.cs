@@ -3,34 +3,22 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
-
+using DailyWeeklyMission.ViewModels;
+using DailyWeeklyMission.Repositories;
 namespace DailyWeeklyMission.Views;
 
 public partial class MainWindow : Window
 {
     // deleteMode basically off
     private bool _deleteMode = false;
-
-    // display Missions data
-    public ObservableCollection<MissionItem> WeeklyMissions { get; } = new()
-    {
-        new() { Id = "w1", Title = "Exercise",    Content = "Workout at the gym",    Current = 1, Target = 3, Completed = false, Type = UiMissionType.WeeklyCount },
-        new() { Id = "w2", Title = "Cleaning",    Content = "Clean the house",        Current = 1, Target = 2, Completed = false, Type = UiMissionType.WeeklyDays, ScheduledDays = new(){1,4}, CurrentDay = 2 },
-        new() { Id = "w3", Title = "Read Books",  Content = "Read for 30 minutes",    Current = 5, Target = 5, Completed = true,  Type = UiMissionType.WeeklyCount },
-    };
-
-    public ObservableCollection<MissionItem> DailyMissions { get; } = new()
-    {
-        new() { Id = "d1", Title = "Drink Water", Content = "8 glasses of water",     Current = 5, Target = 8, Completed = false, Type = UiMissionType.Daily },
-        new() { Id = "d2", Title = "Study",       Content = "Learn new skills",        Current = 2, Target = 2, Completed = true,  Type = UiMissionType.Daily },
-    };
+    private MainViewModel _mainViewModel => (MainViewModel)DataContext;
 
     public MainWindow()
     {
-        InitializeComponent();
-        WeeklyMissionsList.ItemsSource = WeeklyMissions;
-        DailyMissionsList.ItemsSource  = DailyMissions;
 
+        InitializeComponent();
+        var repository = new MissionRepository();
+        DataContext = new MainViewModel(repository);
     }
 
     private void TitleBar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -41,6 +29,7 @@ public partial class MainWindow : Window
 
     private void BtnHistory_Click(object sender, RoutedEventArgs e)
     {
+
         new MissionHistoryWindow().Show();
         Close();
     }
@@ -58,33 +47,26 @@ public partial class MainWindow : Window
 
     private void BtnAddWeekly_Click(object sender, RoutedEventArgs e)
     {
-        new AddMissionWindow(UiMissionType.WeeklyCount).Show();
-        Close();
+        var AddMissionWindow = new AddMissionWindow(UiMissionType.Daily);
+        var repository = new MissionRepository();
+        AddMissionWindow.DataContext = new AddMissionViewModel(repository);
+        if (AddMissionWindow.ShowDialog() == true)
+        {
+            _mainViewModel.RefreshWeeklyMissions();
+        }
     }
 
     private void BtnAddDaily_Click(object sender, RoutedEventArgs e)
     {
-        new AddMissionWindow(UiMissionType.Daily).Show();
-        Close();
+        var AddMissionWindow = new AddMissionWindow(UiMissionType.Daily);
+        var repository = new MissionRepository();
+        AddMissionWindow.DataContext = new AddMissionViewModel(repository);
+        if (AddMissionWindow.ShowDialog() == true)
+        {
+            _mainViewModel.RefreshWeeklyMissions();
+        }
     }
 }
 
 // ?? 紐⑤뜽 ??????????????????????????????????????????????????????????????
 public enum UiMissionType { Daily, WeeklyCount, WeeklyDays }
-
-public class MissionItem : INotifyPropertyChanged
-{
-    public string Id { get; set; } = "";
-    public string Title { get; set; } = "";
-    public string Content { get; set; } = "";
-    public int Current { get; set; }
-    public int Target { get; set; }
-    public bool Completed { get; set; }
-    public UiMissionType Type { get; set; }
-    public List<int> ScheduledDays { get; set; } = new();
-    public int CurrentDay { get; set; }
-
-    public event PropertyChangedEventHandler? PropertyChanged;
-    protected void OnPropertyChanged(string name)
-        => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
-}
