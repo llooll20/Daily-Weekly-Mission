@@ -21,10 +21,6 @@ namespace DailyWeeklyMission.Commands
         public Mission CreateMission()
         {
 
-            var settings = new Settings();
-
-
-            MessageBox.Show(_addMissionViewModel.Content);
             var mission = new Mission
             {
                 Title = _addMissionViewModel.Title,
@@ -54,9 +50,6 @@ namespace DailyWeeklyMission.Commands
         {
 
             Save(CreateMission());
-            var settings = new Settings();
-
-            MessageBox.Show(settings.MissionsJson);
         }
     }
 }

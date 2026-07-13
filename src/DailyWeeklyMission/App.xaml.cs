@@ -1,9 +1,10 @@
-using System.Configuration;
-using System.Data;
-using System.Windows;
+using DailyWeeklyMission.Properties;
 using DailyWeeklyMission.Repositories;
 using DailyWeeklyMission.ViewModels;
 using DailyWeeklyMission.Views;
+using System.Configuration;
+using System.Data;
+using System.Windows;
 
 namespace DailyWeeklyMission
 {
@@ -21,6 +22,13 @@ namespace DailyWeeklyMission
             var mainWindow = new MainWindow();
             mainWindow.DataContext = new MainViewModel(missionRepository);
             mainWindow.Show();
+        }
+        protected override void OnExit(ExitEventArgs e)
+        {
+            var settings = new Settings();
+            MessageBox.Show(settings.MissionsJson);
+
+            base.OnExit(e);
         }
     }
 }

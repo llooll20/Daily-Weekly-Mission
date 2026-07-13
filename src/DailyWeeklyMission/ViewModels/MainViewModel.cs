@@ -13,15 +13,21 @@ namespace DailyWeeklyMission.ViewModels
     {
         private readonly IMissionRepository _missionRepository;
         private ObservableCollection<Mission> _weeklyMissions;
+        public ViewMode _viewMode = ViewMode.Nomal_mode;
 
-        public ICommand CompleteMissionCommand;
-        public ICommand DeleteMissionCommand;
+        public ICommand DeleteMissionCommand { get; set; }
+
+        public ICommand MissionClickCommand { get; set; }
 
         public MainViewModel(IMissionRepository missionRepository)
         {
             _missionRepository = missionRepository;
+            DeleteMissionCommand = new DeleteMissionCommand(_missionRepository, this);
+            MissionClickCommand = new MissionClickCommand(_missionRepository, this);
+
             SetWeeklyMissions(new ObservableCollection<Mission>(_missionRepository.GetAllMissions()));
         }
+
 
         public void RefreshWeeklyMissions()
         {
@@ -42,8 +48,22 @@ namespace DailyWeeklyMission.ViewModels
                 OnPropertyChanged();
             }
         }
-    }
+        public void ChangeViewMode()
+        {
+            if (_viewMode == ViewMode.Nomal_mode)
+            {
+                _viewMode = ViewMode.Delete_mode;
 
-    
+            }
+            else
+            {
+                _viewMode = ViewMode.Nomal_mode;
+            }
+        }
+    }
+    public enum ViewMode{
+        Nomal_mode,
+        Delete_mode
+    }
 
 }

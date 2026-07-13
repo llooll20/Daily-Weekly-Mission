@@ -56,7 +56,7 @@ namespace DailyWeeklyMission.Repositories
                 return;
             }
 
-            mission.IsActive = false;
+            missions.Remove(mission);
             SaveMissions(missions);
         }
 
@@ -121,6 +121,16 @@ namespace DailyWeeklyMission.Repositories
         public void ClearMissions()
         {
             SaveMissions(new List<Mission>());
+        }
+
+        public void IncrementCurrentCount(Mission mission)
+        {
+            mission.CurrentCount++;
+            if(mission.CurrentCount==mission.TargetCount)
+            {
+                mission.IsActive = false;
+            }
+            SaveMission(mission);
         }
     }
   

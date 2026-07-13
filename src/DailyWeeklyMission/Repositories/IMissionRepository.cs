@@ -15,5 +15,7 @@ namespace DailyWeeklyMission.Repositories
         void SaveCompletionRecord(MissionCompletionRecord record);
 
         void ClearMissions();
+
+        public void IncrementCurrentCount(Mission mission);
     }
 }

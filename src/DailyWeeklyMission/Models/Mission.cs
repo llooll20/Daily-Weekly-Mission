@@ -10,6 +10,7 @@ namespace DailyWeeklyMission.Models
         public string Content { get; set; } = string.Empty;
         public MissionType Type { get; set; }
         public int TargetCount { get; set; } = 1;
+        public int CurrentCount { get; set; } = 0;
         public DateTime? StartDate { get; set; } = DateTime.Today;
         public DateTime? EndDate { get; set; } = DateTime.Today;
         public List<DayOfWeek> ScheduledDays { get; set; } = new();
