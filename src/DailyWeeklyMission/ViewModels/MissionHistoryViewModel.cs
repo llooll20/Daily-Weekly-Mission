@@ -3,6 +3,7 @@ using DailyWeeklyMission.Models;
 using DailyWeeklyMission.Repositories;
 using DailyWeeklyMission.Views;
 using System.Collections.ObjectModel;
+using System.Dynamic;
 
 namespace DailyWeeklyMission.ViewModels
 {
@@ -10,20 +11,26 @@ namespace DailyWeeklyMission.ViewModels
     {
         private MissionHistoryWindow _missionHistoryWindow;
         private readonly IMissionRepository _missionRepository;
-        private ObservableCollection<Mission> Missions;
+        private ObservableCollection<Mission> _missions;
         private Mission? _selectedMission;
 
         public MissionHistoryViewModel(IMissionRepository missionRepository)
         {
             _missionRepository = missionRepository;
+            SetMissions(_missionRepository);
         }
 
-        public ObservableCollection<Mission> WeeklyMissions
+        public void SetMissions(IMissionRepository missionRepository)
         {
-            get => Missions;
+            _missions= new ObservableCollection<Mission>(missionRepository.GetAllMissions());
+            OnPropertyChanged(nameof(Missions));
+        }
+        public ObservableCollection<Mission> Missions
+        {
+            get => _missions;
             private set
             {
-                Missions = value;
+                _missions = value;
                 OnPropertyChanged();
             }
         }
