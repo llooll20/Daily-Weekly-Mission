@@ -27,8 +27,6 @@ namespace DailyWeeklyMission.ViewModels
 
             SetWeeklyMissions(new ObservableCollection<Mission>(_missionRepository.GetAllMissions()));
         }
-
-
         public void RefreshWeeklyMissions()
         {
             WeeklyMissions =
@@ -39,6 +37,8 @@ namespace DailyWeeklyMission.ViewModels
             _weeklyMissions = weeklyMissions;
             OnPropertyChanged(nameof(WeeklyMissions));
         }
+
+
         public ObservableCollection<Mission> WeeklyMissions
         {
             get => _weeklyMissions;

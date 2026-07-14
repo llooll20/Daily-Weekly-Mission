@@ -29,8 +29,12 @@ public partial class MainWindow : Window
 
     private void BtnHistory_Click(object sender, RoutedEventArgs e)
     {
+        var missionHistoryWindow =new MissionHistoryWindow();
+        var repository = new MissionRepository();
+        var historyViewModel = new MissionHistoryViewModel(repository);
 
-        new MissionHistoryWindow().Show();
+        missionHistoryWindow.DataContext = historyViewModel;
+        missionHistoryWindow.ShowDialog();
         Close();
     }
 

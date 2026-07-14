@@ -125,11 +125,19 @@ namespace DailyWeeklyMission.Repositories
 
         public void IncrementCurrentCount(Mission mission)
         {
+            if (mission.CurrentCount >= mission.TargetCount)
+            {
+                mission.IsActive = false;
+                return;
+            }
+
             mission.CurrentCount++;
-            if(mission.CurrentCount==mission.TargetCount)
+
+            if (mission.CurrentCount >= mission.TargetCount)
             {
                 mission.IsActive = false;
             }
+
             SaveMission(mission);
         }
     }
