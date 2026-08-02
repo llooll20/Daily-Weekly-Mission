@@ -1,0 +1,346 @@
+<Window x:Class="DailyWeeklyMission.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Daily Weekly Mission"
+        Width="900" Height="600"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        ResizeMode="NoResize">
+
+    <Window.Resources>
+        <!-- MissionCard 삭제 모드 활성 스타일 -->
+        <Style x:Key="MissionCardDeleteStyle" TargetType="Border">
+            <Setter Property="Background" Value="{StaticResource Red50}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource Red500}"/>
+            <Setter Property="BorderThickness" Value="2"/>
+        </Style>
+        <Style x:Key="MissionCardNormalStyle" TargetType="Border">
+            <Setter Property="Background" Value="{StaticResource Amber50}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource Amber200}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+        </Style>
+    </Window.Resources>
+
+    <!-- 바깥 배경 그라디언트 -->
+    <Border CornerRadius="8">
+        <Border.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#FEF3C7" Offset="0"/>
+                <GradientStop Color="#FDE68A" Offset="1"/>
+            </LinearGradientBrush>
+        </Border.Background>
+
+        <!-- 창 본체 -->
+        <Border Margin="32" Background="{StaticResource Amber50}"
+                CornerRadius="8" ClipToBounds="True">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="24" ShadowDepth="4" Opacity="0.18" Color="#000000"/>
+            </Border.Effect>
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>  <!-- 타이틀바 -->
+                    <RowDefinition Height="Auto"/>  <!-- 삭제 모드 배너 -->
+                    <RowDefinition Height="*"/>     <!-- 콘텐츠 -->
+                </Grid.RowDefinitions>
+
+                <!-- ── 타이틀바 ── -->
+                <Border Grid.Row="0"
+                        Background="{StaticResource Amber100}"
+                        BorderBrush="{StaticResource Amber300}"
+                        BorderThickness="0,0,0,1"
+                        Padding="16,8"
+                        MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
+                    <Grid>
+                        <TextBlock Text="Daily Weekly Mission"
+                                   FontSize="16" FontWeight="SemiBold"
+                                   Foreground="{StaticResource Gray800}"
+                                   VerticalAlignment="Center"/>
+                        <StackPanel Orientation="Horizontal"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Center"
+                                    Spacing="4">
+                            <!-- History 버튼 -->
+                            <Button x:Name="BtnHistory"
+                                    Style="{StaticResource TitleBarButtonStyle}"
+                                    ToolTip="Mission History"
+                                    Click="BtnHistory_Click">
+                                <Path Data="M13 3a9 9 0 1 0 9 9h-2a7 7 0 1 1-2.05-4.95L16 9h5V4l-1.91 1.91A8.97 8.97 0 0 0 13 3z M12 7v6l4.25 2.52.77-1.33-3.52-2.09V7H12z"
+                                      Fill="{StaticResource Gray700}" Width="18" Height="18"
+                                      Stretch="Uniform"/>
+                            </Button>
+
+                            <!-- 삭제 모드 토글 버튼 -->
+                            <Button x:Name="BtnDeleteMode"
+                                    Style="{StaticResource TitleBarButtonStyle}"
+                                    ToolTip="Delete Mode"
+                                    Click="BtnDeleteMode_Click">
+                                <Path Data="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"
+                                      Stroke="{StaticResource Gray700}"
+                                      StrokeThickness="1.8"
+                                      StrokeLineJoin="Round"
+                                      StrokeStartLineCap="Round"
+                                      StrokeEndLineCap="Round"
+                                      Width="18" Height="18"
+                                      Stretch="Uniform"
+                                      Fill="Transparent"/>
+                            </Button>
+
+                            <!-- 닫기 버튼 -->
+                            <Button x:Name="BtnClose"
+                                    Style="{StaticResource TitleBarButtonStyle}"
+                                    ToolTip="Close"
+                                    Click="BtnClose_Click">
+                                <Path Data="M18 6 6 18M6 6l12 12"
+                                      Stroke="{StaticResource Gray700}"
+                                      StrokeThickness="1.8"
+                                      StrokeLineJoin="Round"
+                                      StrokeStartLineCap="Round"
+                                      StrokeEndLineCap="Round"
+                                      Width="18" Height="18"
+                                      Stretch="Uniform"
+                                      Fill="Transparent"/>
+                            </Button>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+                <!-- ── 삭제 모드 배너 ── -->
+                <Border x:Name="DeleteModeBanner"
+                        Grid.Row="1"
+                        Background="{StaticResource Red50}"
+                        BorderBrush="{StaticResource Red200}"
+                        BorderThickness="0,0,0,1"
+                        Padding="16,8"
+                        Visibility="Collapsed">
+                    <TextBlock Text="Select a mission to delete"
+                               HorizontalAlignment="Center"
+                               FontSize="13"
+                               Foreground="{StaticResource Red700}"/>
+                </Border>
+
+                <!-- ── 메인 콘텐츠 ── -->
+                <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto" Padding="24">
+                    <StackPanel Spacing="0">
+
+                        <!-- Weekly Missions 섹션 -->
+                        <StackPanel Margin="0,0,0,24">
+                            <!-- 섹션 헤더 -->
+                            <Grid Margin="0,0,0,12">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="Weekly Missions"
+                                           FontSize="16" FontWeight="SemiBold"
+                                           Foreground="{StaticResource Gray800}"
+                                           VerticalAlignment="Center"/>
+                                <Border Grid.Column="0" BorderBrush="{StaticResource Amber300}"
+                                        BorderThickness="0,0,0,1"
+                                        VerticalAlignment="Bottom" Height="1" Margin="0,28,40,0"/>
+                                <Button Grid.Column="1"
+                                        Style="{StaticResource AddButtonStyle}"
+                                        Content="+"
+                                        ToolTip="Add Weekly Mission"
+                                        Click="BtnAddWeekly_Click">
+                                    <Button.ContentTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="+" FontSize="18" FontWeight="Bold"
+                                                       Foreground="White"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"/>
+                                        </DataTemplate>
+                                    </Button.ContentTemplate>
+                                </Button>
+                            </Grid>
+
+                            <!-- Weekly 미션 카드 목록 -->
+                            <ItemsControl x:Name="WeeklyMissionsList">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <!-- MissionCard -->
+                                        <Border Margin="0,0,0,12"
+                                                Background="{StaticResource Amber50}"
+                                                BorderBrush="{StaticResource Amber200}"
+                                                BorderThickness="1"
+                                                CornerRadius="8"
+                                                Padding="16"
+                                                Cursor="Arrow">
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto"/>
+                                                    <RowDefinition Height="Auto"/>
+                                                </Grid.RowDefinitions>
+                                                <!-- 제목 + 완료 체크 -->
+                                                <Grid Grid.Row="0" Margin="0,0,0,12">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <StackPanel>
+                                                        <TextBlock Text="{Binding Title}"
+                                                                   FontSize="14" FontWeight="Medium"
+                                                                   Foreground="{StaticResource Gray800}"
+                                                                   Margin="0,0,0,4"/>
+                                                        <TextBlock Text="{Binding Content}"
+                                                                   FontSize="12"
+                                                                   Foreground="{StaticResource Gray600}"/>
+                                                    </StackPanel>
+                                                    <!-- 완료 체크 원 -->
+                                                    <Ellipse Grid.Column="1"
+                                                             Width="24" Height="24"
+                                                             VerticalAlignment="Top">
+                                                        <Ellipse.Style>
+                                                            <Style TargetType="Ellipse">
+                                                                <Setter Property="Fill" Value="Transparent"/>
+                                                                <Setter Property="Stroke" Value="{StaticResource Gray300}"/>
+                                                                <Setter Property="StrokeThickness" Value="2"/>
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding Completed}" Value="True">
+                                                                        <Setter Property="Fill" Value="{StaticResource Green500}"/>
+                                                                        <Setter Property="Stroke" Value="Transparent"/>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </Ellipse.Style>
+                                                    </Ellipse>
+                                                </Grid>
+                                                <!-- 진행률 바 -->
+                                                <Grid Grid.Row="1">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <ProgressBar Height="6" CornerRadius="3"
+                                                                 Minimum="0" Maximum="{Binding Target}"
+                                                                 Value="{Binding Current}"
+                                                                 Background="{StaticResource Amber200}"
+                                                                 Foreground="{StaticResource Blue500}"
+                                                                 BorderThickness="0"/>
+                                                    <TextBlock Grid.Column="1"
+                                                               Margin="8,0,0,0"
+                                                               FontSize="12"
+                                                               Foreground="{StaticResource Gray600}"
+                                                               VerticalAlignment="Center">
+                                                        <Run Text="{Binding Current}"/><Run Text="/"/><Run Text="{Binding Target}"/>
+                                                    </TextBlock>
+                                                </Grid>
+                                            </Grid>
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+
+                        <!-- Daily Missions 섹션 -->
+                        <StackPanel>
+                            <!-- 섹션 헤더 -->
+                            <Grid Margin="0,0,0,12">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="Daily Missions"
+                                           FontSize="16" FontWeight="SemiBold"
+                                           Foreground="{StaticResource Gray800}"
+                                           VerticalAlignment="Center"/>
+                                <Border Grid.Column="0" BorderBrush="{StaticResource Amber300}"
+                                        BorderThickness="0,0,0,1"
+                                        VerticalAlignment="Bottom" Height="1" Margin="0,28,40,0"/>
+                                <Button Grid.Column="1"
+                                        Style="{StaticResource AddButtonStyle}"
+                                        ToolTip="Add Daily Mission"
+                                        Click="BtnAddDaily_Click">
+                                    <Button.ContentTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="+" FontSize="18" FontWeight="Bold"
+                                                       Foreground="White"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"/>
+                                        </DataTemplate>
+                                    </Button.ContentTemplate>
+                                </Button>
+                            </Grid>
+
+                            <!-- Daily 미션 카드 목록 -->
+                            <ItemsControl x:Name="DailyMissionsList">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border Margin="0,0,0,12"
+                                                Background="{StaticResource Amber50}"
+                                                BorderBrush="{StaticResource Amber200}"
+                                                BorderThickness="1"
+                                                CornerRadius="8"
+                                                Padding="16">
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto"/>
+                                                    <RowDefinition Height="Auto"/>
+                                                </Grid.RowDefinitions>
+                                                <Grid Grid.Row="0" Margin="0,0,0,12">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <StackPanel>
+                                                        <TextBlock Text="{Binding Title}"
+                                                                   FontSize="14" FontWeight="Medium"
+                                                                   Foreground="{StaticResource Gray800}"
+                                                                   Margin="0,0,0,4"/>
+                                                        <TextBlock Text="{Binding Content}"
+                                                                   FontSize="12"
+                                                                   Foreground="{StaticResource Gray600}"/>
+                                                    </StackPanel>
+                                                    <Ellipse Grid.Column="1"
+                                                             Width="24" Height="24"
+                                                             VerticalAlignment="Top">
+                                                        <Ellipse.Style>
+                                                            <Style TargetType="Ellipse">
+                                                                <Setter Property="Fill" Value="Transparent"/>
+                                                                <Setter Property="Stroke" Value="{StaticResource Gray300}"/>
+                                                                <Setter Property="StrokeThickness" Value="2"/>
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding Completed}" Value="True">
+                                                                        <Setter Property="Fill" Value="{StaticResource Green500}"/>
+                                                                        <Setter Property="Stroke" Value="Transparent"/>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </Ellipse.Style>
+                                                    </Ellipse>
+                                                </Grid>
+                                                <Grid Grid.Row="1">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <ProgressBar Height="6" CornerRadius="3"
+                                                                 Minimum="0" Maximum="{Binding Target}"
+                                                                 Value="{Binding Current}"
+                                                                 Background="{StaticResource Amber200}"
+                                                                 Foreground="{StaticResource Blue500}"
+                                                                 BorderThickness="0"/>
+                                                    <TextBlock Grid.Column="1"
+                                                               Margin="8,0,0,0"
+                                                               FontSize="12"
+                                                               Foreground="{StaticResource Gray600}"
+                                                               VerticalAlignment="Center">
+                                                        <Run Text="{Binding Current}"/><Run Text="/"/><Run Text="{Binding Target}"/>
+                                                    </TextBlock>
+                                                </Grid>
+                                            </Grid>
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+
+                    </StackPanel>
+                </ScrollViewer>
+
+            </Grid>
+        </Border>
+    </Border>
+</Window>
