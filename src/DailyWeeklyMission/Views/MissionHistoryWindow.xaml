@@ -1,6 +1,9 @@
 ﻿<Window x:Class="DailyWeeklyMission.Views.MissionHistoryWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:DailyWeeklyMission.ViewModels"
+        xmlns:views="clr-namespace:DailyWeeklyMission.Views"
+        
         Title="Mission History"
         Width="900" Height="600"
         WindowStartupLocation="CenterScreen"
@@ -8,7 +11,13 @@
         AllowsTransparency="True"
         Background="Transparent"
         ResizeMode="NoResize">
+    <Window.Resources>
+        <!--WPF내부에서 연결, "MissionDetailViewModel을 MissionDetailView로 표현한다."-->
+        <DataTemplate DataType="{x:Type vm:MissionDetailViewModel}">
+            <views:MissionDetailView/>
+        </DataTemplate>
 
+    </Window.Resources>
     <Border CornerRadius="8">
         <Border.Background>
             <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
@@ -67,6 +76,7 @@
                     <Border Grid.Column="0"
                             BorderBrush="{StaticResource Amber300}"
                             BorderThickness="0,0,1,0">
+
                         <ScrollViewer VerticalScrollBarVisibility="Auto">
                             <ListBox ItemsSource="{Binding Missions}"
                                 SelectedItem="{Binding SelectedMission}"
@@ -103,7 +113,7 @@
                                                     Foreground="{StaticResource Gray500}">
                                                     <Run Text="{Binding StartDate, StringFormat={}{0:yyyy-MM-dd}}"/>
                                                     <Run Text=" ~ "/>
-                                                    <Run Text="{Binding EndDate, StringFormat={}{0:yyyy-MM-dd}}"/>      
+                                                    <Run Text="{Binding EndDate, StringFormat={}{0:yyyy-MM-dd}}"/>
 
                                                 </TextBlock>
                                             </StackPanel>
@@ -115,11 +125,41 @@
                         </ScrollViewer>
                     </Border>
 
-                    <!-- 誘몄뀡 ?곸꽭 -->
-                    <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto" Padding="24">
-                        <StackPanel x:Name="DetailPanel"/>
-                    </ScrollViewer>
+                    <Grid Grid.Column="1">
 
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        
+                        <!-- 미션 상세내용 -->
+                        <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto" Padding="24">
+                            <ContentControl Content="{Binding SelectedMissionDetail}" />
+                        </ScrollViewer>
+
+                        <!-- 복원, 삭제 버튼 -->
+                        <Border Grid.Row="1"
+                                BorderBrush="{StaticResource Amber300}"
+                                BorderThickness="1,0,0,0"
+                                Padding="10">
+                            <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Right">
+
+                                <Button Width="90"
+                                    Margin="0,0,8,0"
+                                    Content="Restore"
+                                    Style="{StaticResource PrimaryButtonStyle}"
+                                    Command="{Binding RestoreMissionCommand}"/>
+
+                                <Button Width="150"
+                                Content="Delete Permanently"
+                                Style="{StaticResource PrimaryButtonStyle}"
+                                Command="{Binding DeleteMissionCommand}"/>      
+
+                            </StackPanel>
+                        </Border>
+
+                    </Grid>
                 </Grid>
             </Grid>
         </Border>

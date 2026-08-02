@@ -8,9 +8,9 @@
         AllowsTransparency="True"
         Background="Transparent"
         ResizeMode="NoResize">
-
     <Window.Resources>
-        <!-- MissionCard ??젣 紐⑤뱶 ?쒖꽦 ?ㅽ???-->
+        <BooleanToVisibilityConverter x:Key="BoolToVisibility"/>
+        <!-- Resources를 통해 UI 자원 확보-->
         <Style x:Key="MissionCardDeleteStyle" TargetType="Border">
             <Setter Property="Background" Value="{StaticResource Red50}"/>
             <Setter Property="BorderBrush" Value="{StaticResource Red500}"/>
@@ -23,7 +23,7 @@
         </Style>
     </Window.Resources>
 
-    <!-- 諛붽묑 諛곌꼍 洹몃씪?붿뼵??-->
+    <!-- 전체 틀-->
     <Border CornerRadius="8">
         <Border.Background>
             <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
@@ -32,7 +32,7 @@
             </LinearGradientBrush>
         </Border.Background>
 
-        <!-- 李?蹂몄껜 -->
+        <!-- </tool_call> -->
         <Border Margin="32" Background="{StaticResource Amber50}"
                 CornerRadius="8" ClipToBounds="True">
             <Border.Effect>
@@ -41,9 +41,12 @@
 
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>  <!-- ??댄?諛?-->
-                    <RowDefinition Height="Auto"/>  <!-- ??젣 紐⑤뱶 諛곕꼫 -->
-                    <RowDefinition Height="*"/>     <!-- 肄섑뀗痢?-->
+                    <RowDefinition Height="Auto"/>
+                    <!-- ??댄?諛?-->
+                    <RowDefinition Height="Auto"/>
+                    <!-- ??젣 紐⑤뱶 諛곕꼫 -->
+                    <RowDefinition Height="*"/>
+                    <!-- 肄섑뀗痢?-->
                 </Grid.RowDefinitions>
 
                 <!-- ?? ??댄?諛??? -->
@@ -76,7 +79,7 @@
                                     Style="{StaticResource TitleBarButtonStyle}"
                                     ToolTip="Delete Mode"
                                     Click="BtnDeleteMode_Click"
-                                    Command="{Binding DeleteMissionCommand}"
+                                    Command="{Binding OnDeleteModeCommand}"
                                     >
                                 <Path Data="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"
                                       Stroke="{StaticResource Gray700}"
@@ -145,7 +148,10 @@
                                         Style="{StaticResource AddButtonStyle}"
                                         Content="+"
                                         ToolTip="Add Weekly Mission"
-                                        Click="BtnAddWeekly_Click">
+                                        Click="BtnAddWeekly_Click"
+                                        Command="{Binding AddWeeklyMissionCommand}"
+                                        CommandParameter="Weekly"
+                                        >
                                     <Button.ContentTemplate>
                                         <DataTemplate>
                                             <TextBlock Text="+" FontSize="18" FontWeight="Bold"
@@ -158,7 +164,8 @@
                             </Grid>
 
                             <!-- WeeklyMission 리스트 -->
-                            <ItemsControl x:Name="WeeklyMissionsList">
+                            <ItemsControl x:Name="WeeklyMissionsList"
+                                         ItemsSource="{Binding WeeklyMissions}">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
                                         <!-- MissionCard -->
@@ -169,6 +176,14 @@
                                                 CornerRadius="8"
                                                 Padding="16"
                                                 Cursor="Arrow">
+                                            <Border.InputBindings>
+                                                <MouseBinding
+                                                    MouseAction="LeftClick"
+                                                    Command="{Binding DataContext.MissionClickCommand,
+                                                    RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                                    CommandParameter="{Binding}" />
+                                            </Border.InputBindings>
+
                                             <Grid>
                                                 <Grid.RowDefinitions>
                                                     <RowDefinition Height="Auto"/>
@@ -189,7 +204,7 @@
                                                                    FontSize="12"
                                                                    Foreground="{StaticResource Gray600}"/>
                                                     </StackPanel>
-                                                    <!-- ?꾨즺 泥댄겕 ??-->
+                                                    <!-- 완료 버튼 -->
                                                     <Ellipse Grid.Column="1"
                                                              Width="24" Height="24"
                                                              VerticalAlignment="Top">
@@ -199,7 +214,7 @@
                                                                 <Setter Property="Stroke" Value="{StaticResource Gray300}"/>
                                                                 <Setter Property="StrokeThickness" Value="2"/>
                                                                 <Style.Triggers>
-                                                                    <DataTrigger Binding="{Binding Completed}" Value="True">
+                                                                    <DataTrigger Binding="{Binding IsCompleted}" Value="True">
                                                                         <Setter Property="Fill" Value="{StaticResource Green500}"/>
                                                                         <Setter Property="Stroke" Value="Transparent"/>
                                                                     </DataTrigger>
@@ -208,27 +223,80 @@
                                                         </Ellipse.Style>
                                                     </Ellipse>
                                                 </Grid>
-                                                <!-- 吏꾪뻾瑜?諛?-->
-                                                <Grid Grid.Row="1">
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="*"/>
-                                                        <ColumnDefinition Width="Auto"/>
-                                                    </Grid.ColumnDefinitions>
-                                                    <ProgressBar Height="6"
-                                                                 Minimum="0" Maximum="{Binding Target}"
-                                                                 Value="{Binding Current}"
+                                                <StackPanel Grid.Row="1">
+                                                    <!-- 카운트-->
+                                                    <Grid Grid.Row="1" Visibility="{Binding IsWeeklyCount,
+                       Converter={StaticResource BoolToVisibility}}">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="*"/>
+                                                            <ColumnDefinition Width="Auto"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <ProgressBar Height="6"
+                                                                 Minimum="0" Maximum="{Binding TargetCount}"
+                                                                 Value="{Binding CurrentCount}"
+                                                                 Margin="0,4,0,4"
                                                                  Background="{StaticResource Amber200}"
                                                                  Foreground="{StaticResource Blue500}"
                                                                  BorderThickness="0"/>
-                                                    <TextBlock Grid.Column="1"
+                                                        <TextBlock Grid.Column="1"
                                                                Margin="8,0,0,0"
                                                                FontSize="12"
                                                                Foreground="{StaticResource Gray600}"
                                                                VerticalAlignment="Center">
-                                                        <Run Text="{Binding Current}"/><Run Text="/"/><Run Text="{Binding Target}"/>
-                                                    </TextBlock>
-                                                </Grid>
+                                                        <Run Text="{Binding CurrentCount}"/><Run Text="/"/><Run Text="{Binding TargetCount}"/>
+                                                        </TextBlock>
+                                                    </Grid>
+
+                                                    <!-- 요일 -->
+                                                    <ItemsControl Visibility="{Binding IsWeeklyDays,
+                     Converter={StaticResource BoolToVisibility}}"
+                                                        ItemsSource="{Binding DisplayDays}">
+                                                        <ItemsControl.ItemsPanel>
+                                                            <ItemsPanelTemplate>
+                                                                <StackPanel Orientation="Horizontal"/>
+                                                            </ItemsPanelTemplate>
+                                                        </ItemsControl.ItemsPanel>
+
+                                                        <ItemsControl.ItemTemplate>
+                                                            <DataTemplate>
+
+                                                                <Border Width="28"
+                    Height="28"
+                    Margin="0,0,6,0"
+                    CornerRadius="14">
+
+                                                                    <Border.Style>
+                                                                        <Style TargetType="Border">
+
+                                                                            <Setter Property="Background"
+                                Value="{StaticResource Amber200}"/>
+
+                                                                            <Style.Triggers>
+
+                                                                                <DataTrigger Binding="{Binding IsSelected}"
+                                         Value="True">
+                                                                                    <Setter Property="Background"
+                                        Value="{StaticResource Blue500}"/>
+                                                                                </DataTrigger>
+
+                                                                            </Style.Triggers>
+
+                                                                        </Style>
+                                                                    </Border.Style>
+
+                                                                    <TextBlock
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Text="{Binding Text}"/>
+
+                                                                </Border>
+
+                                                            </DataTemplate>
+                                                        </ItemsControl.ItemTemplate>
+                                                    </ItemsControl>
+                                                </StackPanel>
                                             </Grid>
+
                                         </Border>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
@@ -240,20 +308,25 @@
                             <!-- ?뱀뀡 ?ㅻ뜑 -->
                             <Grid Margin="0,0,0,12">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="86*"/>
+                                    <ColumnDefinition Width="37*"/>
+                                    <ColumnDefinition Width="633*"/>
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Text="Daily Missions"
                                            FontSize="16" FontWeight="SemiBold"
                                            Foreground="{StaticResource Gray800}"
-                                           VerticalAlignment="Center"/>
+                                           VerticalAlignment="Center" Grid.ColumnSpan="3"/>
                                 <Border Grid.Column="0" BorderBrush="{StaticResource Amber300}"
                                         BorderThickness="0,0,0,1"
-                                        VerticalAlignment="Bottom" Height="1" Margin="0,28,40,0"/>
-                                <Button Grid.Column="1"
+                                        VerticalAlignment="Bottom" Height="1" Margin="0,0,40,0" Grid.ColumnSpan="3"/>
+                                <Button Grid.Column="3"
                                         Style="{StaticResource AddButtonStyle}"
                                         ToolTip="Add Daily Mission"
-                                        Click="BtnAddDaily_Click">
+                                        Click="BtnAddDaily_Click"
+                                        Command="{Binding AddDailyMissionCommand}"
+                                        CommandParameter="Daily"
+                                        >
                                     <Button.ContentTemplate>
                                         <DataTemplate>
                                             <TextBlock Text="+" FontSize="18" FontWeight="Bold"
@@ -267,7 +340,7 @@
 
                             <!-- Daily 誘몄뀡 移대뱶 紐⑸줉 -->
                             <ItemsControl x:Name="DailyMissionsList" 
-                                          ItemsSource="{Binding WeeklyMissions}">
+                                          ItemsSource="{Binding DailyMissions}">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
                                         <Border Margin="0,0,0,12"
@@ -311,7 +384,7 @@
                                                                 <Setter Property="Stroke" Value="{StaticResource Gray300}"/>
                                                                 <Setter Property="StrokeThickness" Value="2"/>
                                                                 <Style.Triggers>
-                                                                    <DataTrigger Binding="{Binding IsActive}" Value="True">
+                                                                    <DataTrigger Binding="{Binding IsCompleted}" Value="True">
                                                                         <Setter Property="Fill" Value="{StaticResource Green500}"/>
                                                                         <Setter Property="Stroke" Value="Transparent"/>
                                                                     </DataTrigger>

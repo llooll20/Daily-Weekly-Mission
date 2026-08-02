@@ -1,13 +1,15 @@
+using DailyWeeklyMission.Models;
+using DailyWeeklyMission.Services.Time;
 using System;
 using System.Collections.Generic;
-using DailyWeeklyMission.Models;
 
 namespace DailyWeeklyMission.Repositories
 {
     // 미션 데이터를 관리하는 인터페이스
     public interface IMissionRepository
     {
-        IEnumerable<Mission> GetAllMissions();
+        public MissionPeriodService missionPeriodService { get; }
+        IEnumerable <Mission> GetAllMissions();
         Mission GetMissionById(Guid missionId);
         void SaveMission(Mission mission);
         void DeleteMission(Guid missionId);
@@ -16,6 +18,15 @@ namespace DailyWeeklyMission.Repositories
 
         void ClearMissions();
 
-        public void IncrementCurrentCount(Mission mission);
+        
+        void IncrementCurrentCount(Mission mission);
+        void IncrementWeeklyDays(Mission mission);
+
+        void ActivateMission(Mission mission);
+        void DisActivateMission(Mission mission);
+        public void RefreshMission(Mission mission);
+
+
+
     }
 }

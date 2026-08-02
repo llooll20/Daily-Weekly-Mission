@@ -11,7 +11,6 @@ namespace DailyWeeklyMission.Commands
     {
         private IMissionRepository _missionRepository;
         private MainViewModel _mainViewModel;
-        private Mission _mission;
 
         public MissionClickCommand(IMissionRepository missionRepository, MainViewModel mainViewModel)
         {
@@ -25,15 +24,24 @@ namespace DailyWeeklyMission.Commands
             {
                 return;
             }
+
+            //삭제 모드 확인
             if( _mainViewModel._viewMode == ViewMode.Delete_mode )
             {
-                _missionRepository.DeleteMission(mission.Id);
+                _missionRepository.DisActivateMission( mission );
+            }
+
+            //요일, 카운트에 따라 분기
+            if (mission.Type == MissionType.Weekly && mission.IsWeeklyDays)
+            {
+                _missionRepository.IncrementWeeklyDays(mission);
             }
             else
             {
                 _missionRepository.IncrementCurrentCount(mission);
             }
-            _mainViewModel.RefreshWeeklyMissions();
+
+            _mainViewModel.RefreshMissions();
         }
 
         public void DeleteMission(Mission mission)

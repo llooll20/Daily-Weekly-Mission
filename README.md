@@ -15,21 +15,7 @@ Daily Weekly Mission은 사용자가 매일 또는 매주 반복해서 수행할
 
 ## 현재 진행 상태
 
-- WPF 프로젝트 폴더를 `src/DailyWeeklyMission`으로 정리
-- `DesignPattern/MVVM` 중간 폴더 제거
-- `Models`, `ViewModels`, `Views`, `Commands`, `Repositories`, `Services`를 프로젝트 루트 하위로 이동
-- WPF 프로젝트 생성 및 기본 화면 구성
-- 메인 화면 목업 작성
-- 일일 미션 추가 화면 목업 작성
-- 주간 미션 추가 화면 목업 작성
-- 프로젝트 개요 문서 작성
-- 유스케이스 다이어그램 작성
-- 클래스 다이어그램 및 클래스 정의 문서 작성
-- Mission 중심의 Model 계층 추가
-- `IMissionRepository`, `MissionRepository` 기반 저장소 구조 추가
-- `Properties.Settings` 기반 JSON 문자열 저장 구조 추가
-- Mission 관련 Command/ViewModel 파일 추가
-- 기존 Person 예제 기반 MVVM 파일 정리
+-요구사항 기능 및 복원 영구 삭제 기능 구현 완료
 
 ## 프로젝트 구조
 
@@ -103,10 +89,6 @@ dotnet build src\DailyWeeklyMission.slnx
 
 ## 다음 작업 후보
 
-- `MainViewModel`에 미션 목록 바인딩 추가
-- Command와 실제 화면 버튼 연결
-- 미션 추가 창에서 입력값 검증 및 저장 처리
-- 완료 체크/삭제 기능 구현
-- 미션 기록 화면 구현
-- 목업 데이터를 실제 Repository 데이터로 교체
-- 빌드 오류 및 바인딩 오류 점검
+- UI 개선
+- 예외 발생시 메세지 출력
+- 리팩토링
