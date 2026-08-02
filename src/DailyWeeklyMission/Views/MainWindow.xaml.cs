@@ -1,10 +1,11 @@
+using DailyWeeklyMission.Models;
+using DailyWeeklyMission.Repositories;
+using DailyWeeklyMission.ViewModels;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
-using DailyWeeklyMission.ViewModels;
-using DailyWeeklyMission.Repositories;
 namespace DailyWeeklyMission.Views;
 
 public partial class MainWindow : Window
@@ -27,6 +28,7 @@ public partial class MainWindow : Window
     private void BtnClose_Click(object sender, RoutedEventArgs e)
         => Application.Current.Shutdown();
 
+    //미션 기록 창 생성
     private void BtnHistory_Click(object sender, RoutedEventArgs e)
     {
         var missionHistoryWindow =new MissionHistoryWindow();
@@ -35,9 +37,11 @@ public partial class MainWindow : Window
 
         missionHistoryWindow.DataContext = historyViewModel;
         missionHistoryWindow.ShowDialog();
+
         Close();
     }
 
+    //삭제모드 버튼 클릭시, _deleteMode 토글 및 DeleteModeBanner Visibility 변경
     private void BtnDeleteMode_Click(object sender, RoutedEventArgs e)
     {
         _deleteMode = !_deleteMode;
@@ -49,28 +53,27 @@ public partial class MainWindow : Window
             : (Brush)FindResource("Gray700");
     }
 
+    //주간미션 추가 버튼 클릭시, AddMissionWindow 생성 및 DataContext 설정 후 ShowDialog() 호출
     private void BtnAddWeekly_Click(object sender, RoutedEventArgs e)
     {
-        var AddMissionWindow = new AddMissionWindow(UiMissionType.Daily);
+        var AddMissionWindow = new AddMissionWindow();
         var repository = new MissionRepository();
-        AddMissionWindow.DataContext = new AddMissionViewModel(repository);
+        AddMissionWindow.DataContext = new AddMissionViewModel(repository, MissionType.Weekly);
         if (AddMissionWindow.ShowDialog() == true)
         {
-            _mainViewModel.RefreshWeeklyMissions();
+            _mainViewModel.RefreshMissions();
         }
     }
 
+    //일간미션 추가 버튼 클릭시, AddMissionWindow 생성 및 DataContext 설정 후 ShowDialog() 호출
     private void BtnAddDaily_Click(object sender, RoutedEventArgs e)
     {
-        var AddMissionWindow = new AddMissionWindow(UiMissionType.Daily);
+        var AddMissionWindow = new AddMissionWindow();
         var repository = new MissionRepository();
-        AddMissionWindow.DataContext = new AddMissionViewModel(repository);
+        AddMissionWindow.DataContext = new AddMissionViewModel(repository, MissionType.Daily);
         if (AddMissionWindow.ShowDialog() == true)
         {
-            _mainViewModel.RefreshWeeklyMissions();
+            _mainViewModel.RefreshMissions();
         }
     }
 }
-
-// ?? 紐⑤뜽 ??????????????????????????????????????????????????????????????
-public enum UiMissionType { Daily, WeeklyCount, WeeklyDays }

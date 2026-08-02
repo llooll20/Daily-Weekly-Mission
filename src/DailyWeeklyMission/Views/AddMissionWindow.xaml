@@ -8,6 +8,9 @@
         AllowsTransparency="True"
         Background="Transparent"
         ResizeMode="NoResize">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVisibility"/>
+    </Window.Resources>
 
     <Border CornerRadius="8">
         <Border.Background>
@@ -89,59 +92,67 @@
                                 />
                     </StackPanel>
 
-                    <!-- Mission Type -->
-                    <StackPanel>
-                        <TextBlock Text="Mission Type"
-                                   FontSize="13" FontWeight="Medium"
-                                   Foreground="{StaticResource Gray700}"/>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="12"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <ToggleButton x:Name="BtnTypeDaily"
-                                          Grid.Column="0"
-                                          Content="Daily"
-                                          Style="{StaticResource TypeToggleButtonStyle}"
-                                          IsChecked="True"
-                                          Click="BtnTypeDaily_Click"/>
-                            <ToggleButton x:Name="BtnTypeWeekly"
-                                          Grid.Column="2"
-                                          Content="Weekly"
-                                          Style="{StaticResource TypeToggleButtonStyle}"
-                                          Click="BtnTypeWeekly_Click"/>
-                        </Grid>
-                    </StackPanel>
+                    <StackPanel x:Name="MissionOptionPanel">
+                    <StackPanel x:Name="WeekdayPanel"
+                                Visibility="{Binding IsWeeklyMission,
+                     Converter={StaticResource BoolToVisibility}}">
+                        <!-- Mission Type -->
+                    <TextBlock Text="Weekly Mission Type"
+                        FontSize="13"
+                        FontWeight="Medium"
+                        Foreground="{StaticResource Gray700}" />    
+                        
+                    <StackPanel Margin="0,5,0,10">
+                        <RadioButton
+                            Content="Specific Days"
+                            GroupName="MissionType"
+                            IsChecked="{Binding IsDayMode}" />
 
-                    <!-- ?붿씪 ?좏깮 (Weekly ?좏깮 ?쒕쭔 ?쒖떆) -->
-                    <StackPanel x:Name="WeekdayPanel" Visibility="Collapsed">
-                        <TextBlock Text="Select Days"
-                                   FontSize="13" FontWeight="Medium"
-                                   Foreground="{StaticResource Gray700}"/>
-                        <StackPanel Orientation="Horizontal">
-                            <ToggleButton Content="M" Style="{StaticResource WeekdayButtonStyle}" Tag="1"/>
-                            <ToggleButton Content="T" Style="{StaticResource WeekdayButtonStyle}" Tag="2"/>
-                            <ToggleButton Content="W" Style="{StaticResource WeekdayButtonStyle}" Tag="3"/>
-                            <ToggleButton Content="T" Style="{StaticResource WeekdayButtonStyle}" Tag="4"/>
-                            <ToggleButton Content="F" Style="{StaticResource WeekdayButtonStyle}" Tag="5"/>
-                            <ToggleButton Content="S" Style="{StaticResource WeekendButtonStyle}" Tag="6"/>
-                            <ToggleButton Content="S" Style="{StaticResource WeekendButtonStyle}" Tag="7"/>
+                        <RadioButton
+                            x:Name="RadioCount"
+                            Content="Weekly Target Count"
+                            GroupName="MissionType"
+                            IsChecked="{Binding IsCountMode}" />    
+                        
+                        <!-- 요일 선택 -->
+                        <StackPanel Visibility="{Binding IsDayMode,
+                                 Converter={StaticResource BoolToVisibility}}">
+                            <TextBlock Text="Select Days"
+                               FontSize="13"
+                               FontWeight="Medium"
+                               Foreground="{StaticResource Gray700}"/>  
+
+                            <ItemsControl ItemsSource="{Binding Days}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Orientation="Horizontal"/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <ToggleButton
+                                            Content="{Binding Text}"
+                                            IsChecked="{Binding IsSelected}" /> 
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
                         </StackPanel>
                     </StackPanel>
-
-                    <!-- Target Count -->
-                    <StackPanel>
-                        <TextBlock Text="Target Count"
-                                   FontSize="13" FontWeight="Medium"
-                                   Foreground="{StaticResource Gray700}"/>
-                        <TextBox x:Name="TxtTarget"
-                                 Style="{StaticResource FormInputStyle}"
-                                 Tag="e.g., 3"
-                                 Text="{Binding TargetCount, UpdateSourceTrigger=PropertyChanged}"
-                                 />
+                        
                     </StackPanel>
+                    <!-- Target Count -->
+                        <StackPanel x:Name="ShowTargetCount"
+                                Visibility="{Binding ShowTargetCount,
+                                     Converter={StaticResource BoolToVisibility}}">
 
+                        <TextBlock Text="Target Count"/>
+
+                        <TextBox
+                            Text="{Binding TargetCount}" />
+
+                    </StackPanel>
+                    </StackPanel>
                     <!-- Start / End Date -->
                     <Grid>
                         <Grid.ColumnDefinitions>

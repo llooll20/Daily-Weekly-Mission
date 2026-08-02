@@ -1,4 +1,6 @@
 ﻿using DailyWeeklyMission;
+using DailyWeeklyMission.Models;
+using DailyWeeklyMission.ViewModels;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -13,16 +15,12 @@ public partial class AddMissionWindow : Window
         BindingExpression be = ((TextBox)sender).GetBindingExpression(TextBox.TextProperty);
         be.UpdateSource();
     }
-    public AddMissionWindow(UiMissionType initialType = UiMissionType.Daily)
+
+    // 생성자: 초기 미션 타입을 받아서 UI를 설정
+    public AddMissionWindow()
     {
         InitializeComponent();
-        if (initialType == UiMissionType.WeeklyCount || initialType == UiMissionType.WeeklyDays)
-        {
-            BtnTypeDaily.IsChecked   = false;
-            BtnTypeWeekly.IsChecked  = true;
-            WeekdayPanel.Visibility  = Visibility.Visible;
-        }
-
+        
     }
 
     private void TitleBar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -31,25 +29,12 @@ public partial class AddMissionWindow : Window
     private void BtnClose_Click(object sender, RoutedEventArgs e)   => NavigateBack();
     private void BtnCancel_Click(object sender, RoutedEventArgs e)  => NavigateBack();
 
-    private void BtnTypeDaily_Click(object sender, RoutedEventArgs e)
-    {
-        BtnTypeDaily.IsChecked  = true;
-        BtnTypeWeekly.IsChecked = false;
-        WeekdayPanel.Visibility = Visibility.Collapsed;
-    }
-
-    private void BtnTypeWeekly_Click(object sender, RoutedEventArgs e)
-    {
-        BtnTypeWeekly.IsChecked = true;
-        BtnTypeDaily.IsChecked  = false;
-        WeekdayPanel.Visibility = Visibility.Visible;
-    }
 
     private void BtnSave_Click(object sender, RoutedEventArgs e)
     {
-        // UI-only placeholder: validation and repository saving will be connected later.
         NavigateBack();
     }
+
 
     private void NavigateBack()
     {
