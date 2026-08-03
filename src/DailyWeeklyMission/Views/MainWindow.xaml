@@ -2,7 +2,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Daily Weekly Mission"
-        Width="900" Height="600"
+        Width="500" Height="400"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
         AllowsTransparency="True"
@@ -33,7 +33,7 @@
         </Border.Background>
 
         <!-- </tool_call> -->
-        <Border Margin="32" Background="{StaticResource Amber50}"
+        <Border Margin="5" Background="{StaticResource Amber50}"
                 CornerRadius="8" ClipToBounds="True">
             <Border.Effect>
                 <DropShadowEffect BlurRadius="24" ShadowDepth="4" Opacity="0.18" Color="#000000"/>
@@ -41,12 +41,12 @@
 
             <Grid>
                 <Grid.RowDefinitions>
+                    <!--title-->
                     <RowDefinition Height="Auto"/>
-                    <!-- ??댄?諛?-->
+                    <!-- Delete banner-->
                     <RowDefinition Height="Auto"/>
-                    <!-- ??젣 紐⑤뱶 諛곕꼫 -->
+                    <!-- Content -->
                     <RowDefinition Height="*"/>
-                    <!-- 肄섑뀗痢?-->
                 </Grid.RowDefinitions>
 
                 <!-- ?? ??댄?諛??? -->
@@ -54,7 +54,7 @@
                         Background="{StaticResource Amber100}"
                         BorderBrush="{StaticResource Amber300}"
                         BorderThickness="0,0,0,1"
-                        Padding="16,8"
+                        Padding="12,2"
                         MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
                     <Grid>
                         <TextBlock Text="Daily Weekly Mission"
@@ -111,13 +111,13 @@
                     </Grid>
                 </Border>
 
-                <!-- ?? ??젣 紐⑤뱶 諛곕꼫 ?? -->
+                <!-- DeleteModeBanner -->
                 <Border x:Name="DeleteModeBanner"
                         Grid.Row="1"
                         Background="{StaticResource Red50}"
                         BorderBrush="{StaticResource Red200}"
                         BorderThickness="0,0,0,1"
-                        Padding="16,8"
+                        Padding="12,2"
                         Visibility="Collapsed">
                     <TextBlock Text="Select a mission to delete"
                                HorizontalAlignment="Center"
@@ -125,26 +125,31 @@
                                Foreground="{StaticResource Red700}"/>
                 </Border>
 
-                <!-- ?? 硫붿씤 肄섑뀗痢??? -->
-                <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto" Padding="24">
-                    <StackPanel>
+                <Grid Grid.Row="2" Margin="16">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
 
-                        <!-- Weekly Missions ?뱀뀡 -->
-                        <StackPanel Margin="0,0,0,24">
-                            <!-- ?뱀뀡 ?ㅻ뜑 -->
-                            <Grid Margin="0,0,0,12">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Text="Weekly Missions"
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+
+                    <!--Weekly Header-->
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Text="Weekly Missions"
                                            FontSize="16" FontWeight="SemiBold"
                                            Foreground="{StaticResource Gray800}"
                                            VerticalAlignment="Center"/>
-                                <Border Grid.Column="0" BorderBrush="{StaticResource Amber300}"
+                        <Border Grid.Column="0" BorderBrush="{StaticResource Amber300}"
                                         BorderThickness="0,0,0,1"
                                         VerticalAlignment="Bottom" Height="1" Margin="0,28,40,0"/>
-                                <Button Grid.Column="1"
+                        <Button Grid.Column="1"
                                         Style="{StaticResource AddButtonStyle}"
                                         Content="+"
                                         ToolTip="Add Weekly Mission"
@@ -152,275 +157,293 @@
                                         Command="{Binding AddWeeklyMissionCommand}"
                                         CommandParameter="Weekly"
                                         >
-                                    <Button.ContentTemplate>
-                                        <DataTemplate>
-                                            <TextBlock Text="+" FontSize="18" FontWeight="Bold"
+                            <Button.ContentTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="+" FontSize="18" FontWeight="Bold"
                                                        Foreground="White"
                                                        HorizontalAlignment="Center"
                                                        VerticalAlignment="Center"/>
-                                        </DataTemplate>
-                                    </Button.ContentTemplate>
-                                </Button>
-                            </Grid>
+                                </DataTemplate>
+                            </Button.ContentTemplate>
+                        </Button>
+                    </Grid>
 
-                            <!-- WeeklyMission 리스트 -->
-                            <ItemsControl x:Name="WeeklyMissionsList"
+
+                    <!-- WeeklyMission 리스트 스크롤-->
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                <ItemsControl x:Name="WeeklyMissionsList"
                                          ItemsSource="{Binding WeeklyMissions}">
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <!-- MissionCard -->
-                                        <Border Margin="0,0,0,12"
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <!-- MissionCard -->
+                            <Border Margin="0,0,0,12"
                                                 Background="{StaticResource Amber50}"
                                                 BorderBrush="{StaticResource Amber200}"
                                                 BorderThickness="1"
                                                 CornerRadius="8"
                                                 Padding="16"
                                                 Cursor="Arrow">
-                                            <Border.InputBindings>
-                                                <MouseBinding
+                                <Border.InputBindings>
+                                    <MouseBinding
                                                     MouseAction="LeftClick"
                                                     Command="{Binding DataContext.MissionClickCommand,
                                                     RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                                                     CommandParameter="{Binding}" />
-                                            </Border.InputBindings>
+                                </Border.InputBindings>
 
-                                            <Grid>
-                                                <Grid.RowDefinitions>
-                                                    <RowDefinition Height="Auto"/>
-                                                    <RowDefinition Height="Auto"/>
-                                                </Grid.RowDefinitions>
-                                                <!-- ?쒕ぉ + ?꾨즺 泥댄겕 -->
-                                                <Grid Grid.Row="0" Margin="0,0,0,12">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <!-- ?쒕ぉ + ?꾨즺 泥댄겕 -->
+                                    <Grid Grid.Row="0" Margin="0,0,0,12">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid>
                                                     <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="*"/>
                                                         <ColumnDefinition Width="Auto"/>
+                                                        <ColumnDefinition Width="*"/>
                                                     </Grid.ColumnDefinitions>
-                                                    <StackPanel>
-                                                        <TextBlock Text="{Binding Title}"
-                                                                   FontSize="14" FontWeight="Medium"
-                                                                   Foreground="{StaticResource Gray800}"
-                                                                   Margin="0,0,0,4"/>
-                                                        <TextBlock Text="{Binding Content}"
-                                                                   FontSize="12"
-                                                                   Foreground="{StaticResource Gray600}"/>
-                                                    </StackPanel>
-                                                    <!-- 완료 버튼 -->
-                                                    <Ellipse Grid.Column="1"
+                                            
+                                            <TextBlock 
+                                                Grid.Column="0"
+                                                Text="{Binding Title}"
+                                                FontSize="15" FontWeight="SemiBold"
+                                                VerticalAlignment="Center"
+                                                Foreground="{StaticResource Gray800}"
+                                                Margin="0,0,0,4"
+                                                />
+                                            <TextBlock Grid.Column="1"
+                                                       Margin="12,6,0,0"
+                                                       Text="{Binding Content}"
+                                                       FontSize="11"
+                                                       Foreground="{StaticResource Gray600}"
+                                                       TextTrimming="CharacterEllipsis"/>
+                                        </Grid>
+                                        <!-- 완료 버튼 -->
+                                        <Ellipse Grid.Column="1"
                                                              Width="24" Height="24"
                                                              VerticalAlignment="Top">
-                                                        <Ellipse.Style>
-                                                            <Style TargetType="Ellipse">
-                                                                <Setter Property="Fill" Value="Transparent"/>
-                                                                <Setter Property="Stroke" Value="{StaticResource Gray300}"/>
-                                                                <Setter Property="StrokeThickness" Value="2"/>
-                                                                <Style.Triggers>
-                                                                    <DataTrigger Binding="{Binding IsCompleted}" Value="True">
-                                                                        <Setter Property="Fill" Value="{StaticResource Green500}"/>
-                                                                        <Setter Property="Stroke" Value="Transparent"/>
-                                                                    </DataTrigger>
-                                                                </Style.Triggers>
-                                                            </Style>
-                                                        </Ellipse.Style>
-                                                    </Ellipse>
-                                                </Grid>
-                                                <StackPanel Grid.Row="1">
-                                                    <!-- 카운트-->
-                                                    <Grid Grid.Row="1" Visibility="{Binding IsWeeklyCount,
+                                            <Ellipse.Style>
+                                                <Style TargetType="Ellipse">
+                                                    <Setter Property="Fill" Value="Transparent"/>
+                                                    <Setter Property="Stroke" Value="{StaticResource Gray300}"/>
+                                                    <Setter Property="StrokeThickness" Value="2"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding IsCompleted}" Value="True">
+                                                            <Setter Property="Fill" Value="{StaticResource Green500}"/>
+                                                            <Setter Property="Stroke" Value="Transparent"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Ellipse.Style>
+                                        </Ellipse>
+                                    </Grid>
+                                    <StackPanel Grid.Row="1">
+                                        <!-- 카운트-->
+                                        <Grid Grid.Row="1" Visibility="{Binding IsWeeklyCount,
                        Converter={StaticResource BoolToVisibility}}">
-                                                        <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="*"/>
-                                                            <ColumnDefinition Width="Auto"/>
-                                                        </Grid.ColumnDefinitions>
-                                                        <ProgressBar Height="6"
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            <ProgressBar Height="6"
                                                                  Minimum="0" Maximum="{Binding TargetCount}"
                                                                  Value="{Binding CurrentCount}"
                                                                  Margin="0,4,0,4"
                                                                  Background="{StaticResource Amber200}"
                                                                  Foreground="{StaticResource Blue500}"
                                                                  BorderThickness="0"/>
-                                                        <TextBlock Grid.Column="1"
+                                            <TextBlock Grid.Column="1"
                                                                Margin="8,0,0,0"
                                                                FontSize="12"
                                                                Foreground="{StaticResource Gray600}"
                                                                VerticalAlignment="Center">
                                                         <Run Text="{Binding CurrentCount}"/><Run Text="/"/><Run Text="{Binding TargetCount}"/>
-                                                        </TextBlock>
-                                                    </Grid>
+                                            </TextBlock>
+                                        </Grid>
 
-                                                    <!-- 요일 -->
-                                                    <ItemsControl Visibility="{Binding IsWeeklyDays,
+                                        <!-- 요일 -->
+                                        <ItemsControl Visibility="{Binding IsWeeklyDays,
                      Converter={StaticResource BoolToVisibility}}"
                                                         ItemsSource="{Binding DisplayDays}">
-                                                        <ItemsControl.ItemsPanel>
-                                                            <ItemsPanelTemplate>
-                                                                <StackPanel Orientation="Horizontal"/>
-                                                            </ItemsPanelTemplate>
-                                                        </ItemsControl.ItemsPanel>
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <StackPanel Orientation="Horizontal"/>
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
 
-                                                        <ItemsControl.ItemTemplate>
-                                                            <DataTemplate>
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
 
-                                                                <Border Width="28"
+                                                    <Border Width="28"
                     Height="28"
                     Margin="0,0,6,0"
                     CornerRadius="14">
 
-                                                                    <Border.Style>
-                                                                        <Style TargetType="Border">
+                                                        <Border.Style>
+                                                            <Style TargetType="Border">
 
-                                                                            <Setter Property="Background"
+                                                                <Setter Property="Background"
                                 Value="{StaticResource Amber200}"/>
 
-                                                                            <Style.Triggers>
+                                                                <Style.Triggers>
 
-                                                                                <DataTrigger Binding="{Binding IsSelected}"
+                                                                    <DataTrigger Binding="{Binding IsSelected}"
                                          Value="True">
-                                                                                    <Setter Property="Background"
+                                                                        <Setter Property="Background"
                                         Value="{StaticResource Blue500}"/>
-                                                                                </DataTrigger>
+                                                                    </DataTrigger>
 
-                                                                            </Style.Triggers>
+                                                                </Style.Triggers>
 
-                                                                        </Style>
-                                                                    </Border.Style>
+                                                            </Style>
+                                                        </Border.Style>
 
-                                                                    <TextBlock
+                                                        <TextBlock
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Text="{Binding Text}"/>
 
-                                                                </Border>
+                                                    </Border>
 
-                                                            </DataTemplate>
-                                                        </ItemsControl.ItemTemplate>
-                                                    </ItemsControl>
-                                                </StackPanel>
-                                            </Grid>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </StackPanel>
+                                </Grid>
 
-                                        </Border>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
-                        </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
 
-                        <!-- Daily Missions ?뱀뀡 -->
-                        <StackPanel>
-                            <!-- ?뱀뀡 ?ㅻ뜑 -->
-                            <Grid Margin="0,0,0,12">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="86*"/>
-                                    <ColumnDefinition Width="37*"/>
-                                    <ColumnDefinition Width="633*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Text="Daily Missions"
+            <!-- Daily Missions Header -->
+            <Grid Grid.Row="2" Margin="0,20,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+              
+                                    <TextBlock Text="Daily Missions"
                                            FontSize="16" FontWeight="SemiBold"
                                            Foreground="{StaticResource Gray800}"
                                            VerticalAlignment="Center" Grid.ColumnSpan="3"/>
-                                <Border Grid.Column="0" BorderBrush="{StaticResource Amber300}"
+                                    <Border Grid.Column="0" BorderBrush="{StaticResource Amber300}"
                                         BorderThickness="0,0,0,1"
                                         VerticalAlignment="Bottom" Height="1" Margin="0,0,40,0" Grid.ColumnSpan="3"/>
-                                <Button Grid.Column="3"
+                                    <Button Grid.Column="1"
                                         Style="{StaticResource AddButtonStyle}"
                                         ToolTip="Add Daily Mission"
                                         Click="BtnAddDaily_Click"
+                                            
                                         Command="{Binding AddDailyMissionCommand}"
                                         CommandParameter="Daily"
                                         >
-                                    <Button.ContentTemplate>
-                                        <DataTemplate>
-                                            <TextBlock Text="+" FontSize="18" FontWeight="Bold"
+                                        <Button.ContentTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="+" FontSize="18" FontWeight="Bold"
                                                        Foreground="White"
                                                        HorizontalAlignment="Center"
                                                        VerticalAlignment="Center"/>
-                                        </DataTemplate>
-                                    </Button.ContentTemplate>
-                                </Button>
-                            </Grid>
+                                            </DataTemplate>
+                                        </Button.ContentTemplate>
+                                    </Button>
+                                </Grid>
+            <ScrollViewer Grid.Row="3" VerticalScrollBarVisibility="Auto">
 
-                            <!-- Daily 誘몄뀡 移대뱶 紐⑸줉 -->
-                            <ItemsControl x:Name="DailyMissionsList" 
+                <!-- Daily 誘몄뀡 移대뱶 紐⑸줉 -->
+                <ItemsControl x:Name="DailyMissionsList" 
                                           ItemsSource="{Binding DailyMissions}">
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <Border Margin="0,0,0,12"
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Margin="0,0,0,12"
                                                 Background="{StaticResource Amber50}"
                                                 BorderBrush="{StaticResource Amber200}"
                                                 BorderThickness="1"
                                                 CornerRadius="8"
                                                 Padding="16">
-                                            <Border.InputBindings>
-                                                <MouseBinding
+                                <Border.InputBindings>
+                                    <MouseBinding
                                                     MouseAction="LeftClick"
                                                     Command="{Binding DataContext.MissionClickCommand,
                                                     RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                                                     CommandParameter="{Binding}" />
-                                            </Border.InputBindings>
-                                            <Grid>
-                                                <Grid.RowDefinitions>
-                                                    <RowDefinition Height="Auto"/>
-                                                    <RowDefinition Height="Auto"/>
-                                                </Grid.RowDefinitions>
-                                                <Grid Grid.Row="0" Margin="0,0,0,12">
+                                </Border.InputBindings>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid Grid.Row="0" Margin="0,0,0,12">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                                <Grid>
                                                     <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="*"/>
                                                         <ColumnDefinition Width="Auto"/>
+                                                        <ColumnDefinition Width="*"/>
                                                     </Grid.ColumnDefinitions>
-                                                    <StackPanel>
-                                                        <TextBlock Text="{Binding Title}"
-                                                                   FontSize="14" FontWeight="Medium"
+
+                                                    <TextBlock Grid.Column="0"
+                                                        Text="{Binding Title}"
+                                                                   FontSize="14" FontWeight="SemiBold"
                                                                    Foreground="{StaticResource Gray800}"
                                                                    Margin="0,0,0,4"/>
-                                                        <TextBlock Text="{Binding Content}"
-                                                                   FontSize="12"
+                                                    <TextBlock Grid.Column="1" Text="{Binding Content}"
+                                                                   FontSize="11"
+                                                                   Margin="12,6,0,0"
                                                                    Foreground="{StaticResource Gray600}"/>
-                                                    </StackPanel>
-                                                    <Ellipse Grid.Column="1"
+                                                </Grid>
+                                                <Ellipse Grid.Column="1"
                                                              Width="24" Height="24"
                                                              VerticalAlignment="Top">
-                                                        <Ellipse.Style>
-                                                            <Style TargetType="Ellipse">
-                                                                <Setter Property="Fill" Value="Transparent"/>
-                                                                <Setter Property="Stroke" Value="{StaticResource Gray300}"/>
-                                                                <Setter Property="StrokeThickness" Value="2"/>
-                                                                <Style.Triggers>
-                                                                    <DataTrigger Binding="{Binding IsCompleted}" Value="True">
-                                                                        <Setter Property="Fill" Value="{StaticResource Green500}"/>
-                                                                        <Setter Property="Stroke" Value="Transparent"/>
-                                                                    </DataTrigger>
-                                                                </Style.Triggers>
-                                                            </Style>
-                                                        </Ellipse.Style>
-                                                    </Ellipse>
-                                                </Grid>
-                                                <Grid Grid.Row="1">
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="*"/>
-                                                        <ColumnDefinition Width="Auto"/>
-                                                    </Grid.ColumnDefinitions>
-                                                    <ProgressBar Height="6"
+                                            <Ellipse.Style>
+                                                <Style TargetType="Ellipse">
+                                                    <Setter Property="Fill" Value="Transparent"/>
+                                                    <Setter Property="Stroke" Value="{StaticResource Gray300}"/>
+                                                    <Setter Property="StrokeThickness" Value="2"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding IsCompleted}" Value="True">
+                                                            <Setter Property="Fill" Value="{StaticResource Green500}"/>
+                                                            <Setter Property="Stroke" Value="Transparent"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Ellipse.Style>
+                                        </Ellipse>
+                                    </Grid>
+                                    <Grid Grid.Row="1">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <ProgressBar Height="6"
                                                                  Minimum="0" Maximum="{Binding TargetCount}"
                                                                  Value="{Binding CurrentCount}"
                                                                  Background="{StaticResource Amber200}"
                                                                  Foreground="{StaticResource Blue500}"
                                                                  BorderThickness="0"/>
-                                                    <TextBlock Grid.Column="1"
+                                        <TextBlock Grid.Column="1"
                                                                Margin="8,0,0,0"
                                                                FontSize="12"
                                                                Foreground="{StaticResource Gray600}"
                                                                VerticalAlignment="Center">
                                                         <Run Text="{Binding CurrentCount}"/><Run Text="/"/><Run Text="{Binding TargetCount}"/>
-                                                    </TextBlock>
-                                                </Grid>
-                                            </Grid>
-                                        </Border>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
-                        </StackPanel>
-
-                    </StackPanel>
-                </ScrollViewer>
+                                        </TextBlock>
+                                    </Grid>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+            </Grid>
 
             </Grid>
         </Border>
