@@ -27,13 +27,13 @@
     <Border CornerRadius="8">
         <Border.Background>
             <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                <GradientStop Color="#FEF3C7" Offset="0"/>
-                <GradientStop Color="#FDE68A" Offset="1"/>
+                <GradientStop Color="#80000000" Offset="0"/>
+                <GradientStop Color="#80000000" Offset="1"/>
             </LinearGradientBrush>
         </Border.Background>
 
         <!-- </tool_call> -->
-        <Border Margin="5" Background="{StaticResource Amber50}"
+        <Border Margin="0" Background="#80000000"
                 CornerRadius="8" ClipToBounds="True">
             <Border.Effect>
                 <DropShadowEffect BlurRadius="24" ShadowDepth="4" Opacity="0.18" Color="#000000"/>
@@ -51,15 +51,15 @@
 
                 <!-- ?? ??댄?諛??? -->
                 <Border Grid.Row="0"
-                        Background="{StaticResource Amber100}"
-                        BorderBrush="{StaticResource Amber300}"
+                        Background="#99000000"
+                        BorderBrush="#475569"
                         BorderThickness="0,0,0,1"
                         Padding="12,2"
                         MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
                     <Grid>
                         <TextBlock Text="Daily Weekly Mission"
                                    FontSize="16" FontWeight="SemiBold"
-                                   Foreground="{StaticResource Gray800}"
+                                   Foreground="White"
                                    VerticalAlignment="Center"/>
                         <StackPanel Orientation="Horizontal"
                                     HorizontalAlignment="Right"
@@ -144,9 +144,9 @@
 
                         <TextBlock Text="Weekly Missions"
                                            FontSize="16" FontWeight="SemiBold"
-                                           Foreground="{StaticResource Gray800}"
+                                           Foreground="White"
                                            VerticalAlignment="Center"/>
-                        <Border Grid.Column="0" BorderBrush="{StaticResource Amber300}"
+                        <Border Grid.Column="0" BorderBrush="Transparent"
                                         BorderThickness="0,0,0,1"
                                         VerticalAlignment="Bottom" Height="1" Margin="0,28,40,0"/>
                         <Button Grid.Column="1"
@@ -177,8 +177,8 @@
                         <DataTemplate>
                             <!-- MissionCard -->
                             <Border Margin="0,0,0,12"
-                                                Background="{StaticResource Amber50}"
-                                                BorderBrush="{StaticResource Amber200}"
+                                                Background="#80000000"
+                                                BorderBrush="#475569"
                                                 BorderThickness="1"
                                                 CornerRadius="8"
                                                 Padding="16"
@@ -213,14 +213,14 @@
                                                 Text="{Binding Title}"
                                                 FontSize="15" FontWeight="SemiBold"
                                                 VerticalAlignment="Center"
-                                                Foreground="{StaticResource Gray800}"
+                                                Foreground="White"
                                                 Margin="0,0,0,4"
                                                 />
                                             <TextBlock Grid.Column="1"
                                                        Margin="12,6,0,0"
                                                        Text="{Binding Content}"
                                                        FontSize="11"
-                                                       Foreground="{StaticResource Gray600}"
+                                                       Foreground="White"
                                                        TextTrimming="CharacterEllipsis"/>
                                         </Grid>
                                         <!-- 완료 버튼 -->
@@ -331,9 +331,9 @@
               
                                     <TextBlock Text="Daily Missions"
                                            FontSize="16" FontWeight="SemiBold"
-                                           Foreground="{StaticResource Gray800}"
+                                           Foreground="White"
                                            VerticalAlignment="Center" Grid.ColumnSpan="3"/>
-                                    <Border Grid.Column="0" BorderBrush="{StaticResource Amber300}"
+                                    <Border Grid.Column="0" BorderBrush="Transparent"
                                         BorderThickness="0,0,0,1"
                                         VerticalAlignment="Bottom" Height="1" Margin="0,0,40,0" Grid.ColumnSpan="3"/>
                                     <Button Grid.Column="1"
@@ -362,8 +362,8 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <Border Margin="0,0,0,12"
-                                                Background="{StaticResource Amber50}"
-                                                BorderBrush="{StaticResource Amber200}"
+                                                Background="#80000000"
+                                                BorderBrush="#475569"
                                                 BorderThickness="1"
                                                 CornerRadius="8"
                                                 Padding="16">
@@ -393,12 +393,12 @@
                                                     <TextBlock Grid.Column="0"
                                                         Text="{Binding Title}"
                                                                    FontSize="14" FontWeight="SemiBold"
-                                                                   Foreground="{StaticResource Gray800}"
+                                                                   Foreground="White"
                                                                    Margin="0,0,0,4"/>
                                                     <TextBlock Grid.Column="1" Text="{Binding Content}"
                                                                    FontSize="11"
                                                                    Margin="12,6,0,0"
-                                                                   Foreground="{StaticResource Gray600}"/>
+                                                                   Foreground="White"/>
                                                 </Grid>
                                                 <Ellipse Grid.Column="1"
                                                              Width="24" Height="24"
