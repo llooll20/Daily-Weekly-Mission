@@ -22,7 +22,11 @@ public partial class MissionHistoryWindow : Window
 
     private void BtnClose_Click(object sender, RoutedEventArgs e)
     {
-        new MainWindow().Show();
+        NavigateBack();
+    }
+
+    private void NavigateBack()
+    {
         Close();
     }
 }

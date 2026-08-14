@@ -25,9 +25,6 @@ namespace DailyWeeklyMission
         }
         protected override void OnExit(ExitEventArgs e)
         {
-            var settings = new Settings();
-            MessageBox.Show(settings.MissionsJson);
-
             base.OnExit(e);
         }
     }

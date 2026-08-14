@@ -38,7 +38,6 @@ public partial class MainWindow : Window
         missionHistoryWindow.DataContext = historyViewModel;
         missionHistoryWindow.ShowDialog();
 
-        Close();
     }
 
     //삭제모드 버튼 클릭시, _deleteMode 토글 및 DeleteModeBanner Visibility 변경

@@ -15,12 +15,12 @@
     <Border CornerRadius="8">
         <Border.Background>
             <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                <GradientStop Color="#FEF3C7" Offset="0"/>
-                <GradientStop Color="#FDE68A" Offset="1"/>
+                <GradientStop Color="#FF000000" Offset="0"/>
+                <GradientStop Color="#FF000000" Offset="1"/>
             </LinearGradientBrush>
         </Border.Background>
 
-        <Border Margin="5" Background="{StaticResource Amber50}"
+        <Border Margin="5" Background="#FF000000"
                 CornerRadius="8" ClipToBounds="True">
             <Border.Effect>
                 <DropShadowEffect BlurRadius="24" ShadowDepth="4" Opacity="0.18" Color="#000000"/>
@@ -34,19 +34,24 @@
 
                 <!-- ?? ??댄?諛??? -->
                 <Border Grid.Row="0"
-                        Background="{StaticResource Amber100}"
-                        BorderBrush="{StaticResource Amber300}"
+                        Background="#000000"
+                        BorderBrush="#475569"
                         BorderThickness="0,0,0,1"
                         Padding="16,8"
                         MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
                     <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="152*"/>
+                            <ColumnDefinition Width="13*"/>
+                            <ColumnDefinition Width="393*"/>
+                        </Grid.ColumnDefinitions>
                         <TextBlock Text="Add Mission"
                                    FontSize="16" FontWeight="SemiBold"
-                                   Foreground="{StaticResource Gray800}"
-                                   VerticalAlignment="Center"/>
-                        <Button HorizontalAlignment="Right"
+                                   Foreground="#E6E6E6"
+                                   VerticalAlignment="Center" Grid.ColumnSpan="3"/>
+                        <Button HorizontalAlignment="Left"
                                 Style="{StaticResource TitleBarButtonStyle}"
-                                Click="BtnClose_Click">
+                                Click="BtnClose_Click" Grid.Column="2" Margin="361,0,0,0">
                             <Path Data="M18 6 6 18M6 6l12 12"
                                   Stroke="{StaticResource Gray700}"
                                   StrokeThickness="1.8"
@@ -66,18 +71,20 @@
                     <StackPanel>
                         <TextBlock Text="Mission Title"
                                    FontSize="13" FontWeight="Medium"
-                                   Foreground="{StaticResource Gray700}"/>
+                                   Foreground="#E6E6E6"/>
                         <TextBox x:Name="TxtTitle"
                                  Style="{StaticResource FormInputStyle}"
                                  Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}"
-                                 Tag="Enter mission title"/>
+                                 Tag="Enter mission title"
+                                 />
+
                     </StackPanel>
 
                     <!-- Mission Content -->
                     <StackPanel>
                         <TextBlock Text="Mission Content"
                                    FontSize="13" FontWeight="Medium"
-                                   Foreground="{StaticResource Gray700}"/>
+                                   Foreground="#E6E6E6"/>
                         <TextBox x:Name="TxtContent"
                                  Height="72"
                                  TextWrapping="Wrap"
@@ -93,65 +100,69 @@
                     </StackPanel>
 
                     <StackPanel x:Name="MissionOptionPanel">
-                    <StackPanel x:Name="WeekdayPanel"
+                        <StackPanel x:Name="WeekdayPanel"
                                 Visibility="{Binding IsWeeklyMission,
                      Converter={StaticResource BoolToVisibility}}">
-                        <!-- Mission Type -->
-                    <TextBlock Text="Weekly Mission Type"
+                            <!-- Mission Type -->
+                            <TextBlock Text="Weekly Mission Type"
                         FontSize="13"
                         FontWeight="Medium"
-                        Foreground="{StaticResource Gray700}" />    
-                        
-                    <StackPanel Margin="0,5,0,10">
-                        <RadioButton
+                        Foreground="#E6E6E6" />
+
+                            <StackPanel Margin="0,5,0,10">
+                                <RadioButton
                             Content="Specific Days"
                             GroupName="MissionType"
+                            FontSize="12"
+                            Foreground="#B8B8B8"
                             IsChecked="{Binding IsDayMode}" />
 
-                        <RadioButton
+                                <RadioButton
                             x:Name="RadioCount"
                             Content="Weekly Target Count"
                             GroupName="MissionType"
-                            IsChecked="{Binding IsCountMode}" />    
-                        
-                        <!-- 요일 선택 -->
-                        <StackPanel Visibility="{Binding IsDayMode,
+                            FontSize="12"
+                            Foreground="#B8B8B8"
+                            IsChecked="{Binding IsCountMode}" />
+
+                                <!-- 요일 선택 -->
+                                <StackPanel Visibility="{Binding IsDayMode,
                                  Converter={StaticResource BoolToVisibility}}">
-                            <TextBlock Text="Select Days"
+                                    <TextBlock Text="Select Days"
                                FontSize="13"
                                FontWeight="Medium"
-                               Foreground="{StaticResource Gray700}"/>  
+                               Foreground="#E6E6E6"/>
 
-                            <ItemsControl ItemsSource="{Binding Days}">
-                                <ItemsControl.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <StackPanel Orientation="Horizontal"/>
-                                    </ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel>
+                                    <ItemsControl ItemsSource="{Binding Days}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel Orientation="Horizontal"/>
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
 
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <ToggleButton
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <ToggleButton
                                             Content="{Binding Text}"
-                                            IsChecked="{Binding IsSelected}" /> 
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
+                                            IsChecked="{Binding IsSelected}" />
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </StackPanel>
+                            </StackPanel>
+
                         </StackPanel>
-                    </StackPanel>
-                        
-                    </StackPanel>
-                    <!-- Target Count -->
+                        <!-- Target Count -->
                         <StackPanel x:Name="ShowTargetCount"
                                 Visibility="{Binding ShowTargetCount,
                                      Converter={StaticResource BoolToVisibility}}">
 
-                        <TextBlock Text="Target Count"/>
+                            <TextBlock Text="Target Count" FontSize="12" Foreground="#E6E6E6"/>
 
-                        <TextBox
+                            <TextBox
                             Text="{Binding TargetCount}" />
 
-                    </StackPanel>
+                        </StackPanel>
                     </StackPanel>
                     <!-- Start / End Date -->
                     <Grid>
@@ -163,8 +174,8 @@
 
                         <StackPanel Grid.Column="0">
                             <TextBlock Text="Start Date"
-                                       FontSize="13" FontWeight="Medium"
-                                       Foreground="{StaticResource Gray700}"/>
+                                       FontSize="12" FontWeight="Medium"
+                                       Foreground="#E6E6E6"/>
                             <DatePicker x:Name="DpStart"
                                         Height="34"
                                         Background="White"
@@ -176,8 +187,8 @@
 
                         <StackPanel Grid.Column="2">
                             <TextBlock Text="End Date"
-                                       FontSize="13" FontWeight="Medium"
-                                       Foreground="{StaticResource Gray700}"/>
+                                       FontSize="12" FontWeight="Medium"
+                                       Foreground="#E6E6E6"/>
                             <DatePicker x:Name="DpEnd"
                                         Height="34"
                                         Background="White"

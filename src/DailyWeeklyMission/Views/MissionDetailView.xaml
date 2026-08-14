@@ -14,19 +14,20 @@
             <TextBlock Text="{Binding Title}"
                FontSize="22"
                FontWeight="SemiBold"
-               Foreground="{StaticResource Gray800}" />
+               Foreground="#E6E6E6" />
 
             <StackPanel Orientation="Horizontal"
                 Margin="0,4,0,24">
 
                 <TextBlock Text="{Binding MissionType}"
                    FontSize="12"
-                   Foreground="{StaticResource Gray600}"
+                   Foreground="#E6E6E6"
                    VerticalAlignment="Center" />
 
                 <Border Margin="8,0,0,0"
                 Padding="8,2"
                 CornerRadius="10"
+                BorderBrush="#E6E6E6"
                 Background="{StaticResource Green100}">
 
                     <TextBlock Text="{Binding IsCompleted }"
@@ -39,7 +40,9 @@
 
 
             <!-- Progress -->
-            <Border Background="{StaticResource Amber100}"
+            <Border Background="#80000000"
+                    BorderBrush="#475569"
+                    BorderThickness="1"
             CornerRadius="8"
             Padding="16">
 
@@ -49,19 +52,20 @@
                     <Grid Margin="0,0,0,12">
 
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
+                            <ColumnDefinition Width="4*"/>
+                            <ColumnDefinition Width="11*"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
 
                         <TextBlock Text="Progress"
                            FontSize="12"
-                           Foreground="{StaticResource Gray700}" />
+                           Foreground="#E6E6E6" Grid.ColumnSpan="2" />
 
-                        <TextBlock Grid.Column="1"
+                        <TextBlock Grid.Column="2"
                            Text="{Binding ProgressText}"
                            FontSize="18"
                            FontWeight="SemiBold"
-                           Foreground="{StaticResource Gray800}" />
+                           Foreground="#E6E6E6" />
 
                     </Grid>
 
@@ -71,14 +75,14 @@
                          Maximum="100"
                          Value="{Binding ProgressValue, Mode=OneWay}"
                          BorderThickness="0"
-                         Background="{StaticResource Amber200}"
-                         Foreground="{StaticResource Blue500}" />
+                         Background="#99FEF2F2"
+                         Foreground="#FB923C" />
 
                     <TextBlock Text="{Binding ProgressPercentage}"
                        Margin="0,10,0,0"
                        HorizontalAlignment="Center"
                        FontSize="12"
-                       Foreground="{StaticResource Gray600}" />
+                       Foreground="#E6E6E6" />
 
                 </StackPanel>
 
@@ -91,17 +95,17 @@
                 <TextBlock Text="Period"
                    FontSize="12"
                    FontWeight="Medium"
-                   Foreground="{StaticResource Gray700}"
+                   Foreground="#E6E6E6"
                    Margin="0,0,0,6"/>
 
-                <Border Background="{StaticResource Amber50}"
-                BorderBrush="{StaticResource Amber200}"
+                <Border Background="#80000000"
+                BorderBrush="#475569"
                 BorderThickness="1"
                 CornerRadius="6"
                 Padding="12,8">
 
-                    <TextBlock>
-
+                    <TextBlock
+                        Foreground="#E6E6E6">
                 <Run Text="{Binding StartDate, StringFormat='yyyy-MM-dd'}"/>
                 <Run Text=" ~ "/>
                 <Run Text="{Binding EndDate, StringFormat='yyyy-MM-dd'}"/>
@@ -117,7 +121,7 @@
                 <TextBlock
         FontSize="12"
         FontWeight="Medium"
-        Foreground="{StaticResource Gray700}">
+        Foreground="#E6E6E6">
 
         <Run Text="Completed Dates ("/>
         <Run Text="{Binding CalendarDaysCompletedCount, Mode=OneWay}"/>
@@ -128,8 +132,8 @@
                 <Border
         Margin="0,8,0,0"
         Padding="12"
-        Background="{StaticResource Amber50}"
-        BorderBrush="{StaticResource Amber200}"
+        Background="#80000000"
+        BorderBrush="#475569"
         BorderThickness="1"
         CornerRadius="8">
 
@@ -155,6 +159,7 @@
                     FontSize="13"
                     FontWeight="SemiBold"
                     HorizontalAlignment="Center"
+                    Foreground="#E6E6E6"
                     VerticalAlignment="Center"/>
 
                             <Button
@@ -203,7 +208,7 @@
 
                                                     <!-- 완료 -->
                                                     <DataTrigger Binding="{Binding IsCompleted}" Value="True">
-                                                        <Setter Property="Background" Value="{StaticResource Green500}"/>
+                                                        <Setter Property="Background" Value="#6F8F76"/>
                                                     </DataTrigger>
 
                                                 </Style.Triggers>
@@ -217,18 +222,18 @@
 
                                             <TextBlock.Style>
                                                 <Style TargetType="TextBlock">
-                                                    <Setter Property="Foreground" Value="{StaticResource Gray700}"/>
+                                                    <Setter Property="Foreground" Value="#E6E6E6"/>
                                                     <Style.Triggers>
 
                                                         <!-- 완료 -->
                                                         <DataTrigger Binding="{Binding IsCompleted}" Value="True">
-                                                            <Setter Property="Foreground" Value="White"/>
+                                                            <Setter Property="Foreground" Value="#E6E6E6"/>
                                                             <Setter Property="FontWeight" Value="Bold"/>
                                                         </DataTrigger>
 
                                                         <!-- 이번 달이 아님 -->
                                                         <DataTrigger Binding="{Binding IsCurrentMonth}" Value="False">
-                                                            <Setter Property="Foreground" Value="{StaticResource Gray300}"/>
+                                                            <Setter Property="Foreground" Value="{StaticResource Gray700}"/>
                                                         </DataTrigger>
 
                                                     </Style.Triggers>
